@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - DevCore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="home.html" class="back-btn">←</a>
+            <h1>Marketplace 🛍️</h1>
+            <p>Compra y vende</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Search Bar -->
+            <div class="card" style="padding: 15px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Buscar productos..." style="flex: 1; padding: 12px; border: 2px solid #E9ECEF; border-radius: 8px; font-size: 14px;">
+                    <button class="btn btn-primary" style="padding: 12px 20px; width: auto;">🔍</button>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div style="display: flex; gap: 8px; overflow-x: auto; margin: 20px 0; padding-bottom: 10px;">
+                <button class="btn btn-primary" style="padding: 8px 16px; width: auto; font-size: 13px; white-space: nowrap;">
+                    📚 Libros
+                </button>
+                <button class="btn btn-outline" style="padding: 8px 16px; width: auto; font-size: 13px; white-space: nowrap;">
+                    💻 Electrónicos
+                </button>
+                <button class="btn btn-outline" style="padding: 8px 16px; width: auto; font-size: 13px; white-space: nowrap;">
+                    👕 Ropa
+                </button>
+                <button class="btn btn-outline" style="padding: 8px 16px; width: auto; font-size: 13px; white-space: nowrap;">
+                    🎒 Accesorios
+                </button>
+            </div>
+
+            <!-- Info Alert -->
+            <div class="alert alert-info">
+                <strong>💰 Comisión del sistema:</strong> 5-10% por transacción
+            </div>
+
+            <!-- Products Grid -->
+            <div class="product-grid" style="padding: 0;">
+                <!-- Product 1 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn">♡</button>
+                    <div class="product-image">📚</div>
+                    <div class="product-info">
+                        <div class="product-title">Cálculo Diferencial</div>
+                        <div class="product-price">$250</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Buen estado</p>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn">♡</button>
+                    <div class="product-image">💻</div>
+                    <div class="product-info">
+                        <div class="product-title">Calculadora TI-84</div>
+                        <div class="product-price">$800</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Como nueva</p>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn" style="color: #FF6B35;">♥</button>
+                    <div class="product-image">📖</div>
+                    <div class="product-info">
+                        <div class="product-title">Física II</div>
+                        <div class="product-price">$180</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Usado</p>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn">♡</button>
+                    <div class="product-image">🎒</div>
+                    <div class="product-info">
+                        <div class="product-title">Mochila UAT</div>
+                        <div class="product-price">$350</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Nuevo</p>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn">♡</button>
+                    <div class="product-image">📐</div>
+                    <div class="product-info">
+                        <div class="product-title">Juego Geométrico</div>
+                        <div class="product-price">$50</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Buen estado</p>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn">♡</button>
+                    <div class="product-image">🖊️</div>
+                    <div class="product-info">
+                        <div class="product-title">Set de Plumas</div>
+                        <div class="product-price">$80</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Nuevo</p>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn" style="color: #FFB39C;">♥</button>
+                    <div class="product-image">🖥️</div>
+                    <div class="product-info">
+                        <div class="product-title">Monitor 22"</div>
+                        <div class="product-price">$1,500</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Excelente</p>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card" style="position: relative;">
+                    <button class="favorite-btn">♡</button>
+                    <div class="product-image">⌨️</div>
+                    <div class="product-info">
+                        <div class="product-title">Teclado Gaming</div>
+                        <div class="product-price">$600</div>
+                        <p style="font-size: 11px; color: #6C757D; margin: 5px 0 0 0;">Buen estado</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Products Section -->
+            <h3 style="color: #8AB4D7; margin: 30px 0 15px 0; font-size: 18px;">Mis Productos</h3>
+
+            <div class="card">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="font-size: 32px;">📚</div>
+                        <div>
+                            <p style="font-size: 14px; color: #8AB4D7; margin: 0; font-weight: 600;">Programación en Java</p>
+                            <p style="font-size: 12px; color: #6C757D; margin: 3px 0 0 0;">$200 • 3 interesados</p>
+                        </div>
+                    </div>
+                    <span class="badge badge-success">Activo</span>
+                </div>
+
+                <button class="btn btn-outline" style="padding: 10px; font-size: 13px;">✏️ Editar Publicación</button>
+            </div>
+
+            <!-- Floating Action Button -->
+            <button style="position: fixed; bottom: 90px; right: calc(50% - 220px); width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #FFB39C 0%, #FFD97D 100%); border: none; color: white; font-size: 28px; box-shadow: 0 4px 15px rgba(255, 179, 156, 0.5); cursor: pointer; z-index: 100;">
+                +
+            </button>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <a href="home.html" class="nav-item">
+                <span class="nav-item-icon">🏠</span>
+                <span class="nav-item-text">Inicio</span>
+            </a>
+            <a href="bus-tracking.html" class="nav-item">
+                <span class="nav-item-icon">🚌</span>
+                <span class="nav-item-text">Bus</span>
+            </a>
+            <a href="marketplace.html" class="nav-item active">
+                <span class="nav-item-icon">🛍️</span>
+                <span class="nav-item-text">Market</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-item-icon">👤</span>
+                <span class="nav-item-text">Perfil</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

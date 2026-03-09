@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - DevCore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>¡Hola, Estudiante! 👋</h1>
+            <p>Bienvenido a DevCore</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Stats -->
+            <div class="stats-container">
+                <div class="stat-box" style="background: linear-gradient(135deg, #8AB4D7 0%, #FFB39C 100%);">
+                    <span class="stat-value">85</span>
+                    <span class="stat-label">Nivel de Confianza</span>
+                </div>
+                <div class="stat-box" style="background: linear-gradient(135deg, #FFB39C 0%, #FFD97D 100%);">
+                    <span class="stat-value">7</span>
+                    <span class="stat-label">Racha Días</span>
+                </div>
+            </div>
+
+            <!-- Modules -->
+            <h3 style="color: #8AB4D7; margin: 30px 0 15px 0; font-size: 18px;">Módulos Principales</h3>
+
+            <a href="bus-tracking.html" style="text-decoration: none;">
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #8AB4D7 0%, #FFB39C 100%); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                            🚌
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="card-title" style="margin-bottom: 5px;">Bus Tracking</div>
+                            <p style="font-size: 13px; color: #6C757D; margin: 0;">Reporta el estado del camión en tiempo real</p>
+                        </div>
+                        <div style="font-size: 20px; color: #FFB39C;">→</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="marketplace.html" style="text-decoration: none;">
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #FFB39C 0%, #FFD97D 100%); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                            🛍️
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="card-title" style="margin-bottom: 5px;">Marketplace</div>
+                            <p style="font-size: 13px; color: #6C757D; margin: 0;">Compra y vende artículos universitarios</p>
+                        </div>
+                        <div style="font-size: 20px; color: #FFB39C;">→</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="profile.html" style="text-decoration: none;">
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #81C784 0%, #AED581 100%); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                            🏆
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="card-title" style="margin-bottom: 5px;">Mi Perfil</div>
+                            <p style="font-size: 13px; color: #6C757D; margin: 0;">Ver reputación, rachas y logros</p>
+                        </div>
+                        <div style="font-size: 20px; color: #FFB39C;">→</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Quick Actions -->
+            <h3 style="color: #8AB4D7; margin: 30px 0 15px 0; font-size: 18px;">Acciones Rápidas</h3>
+
+            <div class="card">
+                <div style="display: flex; gap: 15px;">
+                    <button class="btn btn-primary" style="flex: 1; padding: 12px; font-size: 14px;">
+                        ✅ Check-in Diario
+                    </button>
+                    <button class="btn btn-secondary" style="flex: 1; padding: 12px; font-size: 14px;">
+                        📢 Reportar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <h3 style="color: #8AB4D7; margin: 30px 0 15px 0; font-size: 18px;">Notificaciones</h3>
+            
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                    <div style="font-size: 24px;">🔔</div>
+                    <div>
+                        <p style="font-size: 14px; color: #8AB4D7; margin: 0; font-weight: 600;">Nuevo reporte de bus</p>
+                        <p style="font-size: 12px; color: #6C757D; margin: 5px 0 0 0;">El camión ya pasó por la ruta 1 - Hace 5 min</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="font-size: 24px;">⭐</div>
+                    <div>
+                        <p style="font-size: 14px; color: #8AB4D7; margin: 0; font-weight: 600;">¡Racha de 7 días!</p>
+                        <p style="font-size: 12px; color: #6C757D; margin: 5px 0 0 0;">Mantén tu racha activa para ganar puntos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <a href="home.html" class="nav-item active">
+                <span class="nav-item-icon">🏠</span>
+                <span class="nav-item-text">Inicio</span>
+            </a>
+            <a href="bus-tracking.html" class="nav-item">
+                <span class="nav-item-icon">🚌</span>
+                <span class="nav-item-text">Bus</span>
+            </a>
+            <a href="marketplace.html" class="nav-item">
+                <span class="nav-item-icon">🛍️</span>
+                <span class="nav-item-text">Market</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-item-icon">👤</span>
+                <span class="nav-item-text">Perfil</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
