@@ -84,6 +84,12 @@
             android:name="com.devcore.uat.MarketplaceActivity"
             android:exported="false"
             android:theme="@style/Theme.DevCore" />
+
+        <!-- Comunidades Activity -->
+        <activity
+            android:name="com.devcore.uat.ComunidadesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
         <activity
             android:name="androidx.compose.ui.tooling.PreviewActivity"
             android:exported="true" />

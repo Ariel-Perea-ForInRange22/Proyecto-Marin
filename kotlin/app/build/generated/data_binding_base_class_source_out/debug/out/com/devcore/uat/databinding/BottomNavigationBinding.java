@@ -23,6 +23,9 @@ public final class BottomNavigationBinding implements ViewBinding {
   public final TextView iconBus;
 
   @NonNull
+  public final TextView iconComunidades;
+
+  @NonNull
   public final TextView iconHome;
 
   @NonNull
@@ -33,6 +36,9 @@ public final class BottomNavigationBinding implements ViewBinding {
 
   @NonNull
   public final LinearLayout navBus;
+
+  @NonNull
+  public final LinearLayout navComunidades;
 
   @NonNull
   public final LinearLayout navHome;
@@ -47,6 +53,9 @@ public final class BottomNavigationBinding implements ViewBinding {
   public final TextView textBus;
 
   @NonNull
+  public final TextView textComunidades;
+
+  @NonNull
   public final TextView textHome;
 
   @NonNull
@@ -56,20 +65,25 @@ public final class BottomNavigationBinding implements ViewBinding {
   public final TextView textProfile;
 
   private BottomNavigationBinding(@NonNull LinearLayout rootView, @NonNull TextView iconBus,
-      @NonNull TextView iconHome, @NonNull TextView iconMarket, @NonNull TextView iconProfile,
-      @NonNull LinearLayout navBus, @NonNull LinearLayout navHome, @NonNull LinearLayout navMarket,
-      @NonNull LinearLayout navProfile, @NonNull TextView textBus, @NonNull TextView textHome,
-      @NonNull TextView textMarket, @NonNull TextView textProfile) {
+      @NonNull TextView iconComunidades, @NonNull TextView iconHome, @NonNull TextView iconMarket,
+      @NonNull TextView iconProfile, @NonNull LinearLayout navBus,
+      @NonNull LinearLayout navComunidades, @NonNull LinearLayout navHome,
+      @NonNull LinearLayout navMarket, @NonNull LinearLayout navProfile, @NonNull TextView textBus,
+      @NonNull TextView textComunidades, @NonNull TextView textHome, @NonNull TextView textMarket,
+      @NonNull TextView textProfile) {
     this.rootView = rootView;
     this.iconBus = iconBus;
+    this.iconComunidades = iconComunidades;
     this.iconHome = iconHome;
     this.iconMarket = iconMarket;
     this.iconProfile = iconProfile;
     this.navBus = navBus;
+    this.navComunidades = navComunidades;
     this.navHome = navHome;
     this.navMarket = navMarket;
     this.navProfile = navProfile;
     this.textBus = textBus;
+    this.textComunidades = textComunidades;
     this.textHome = textHome;
     this.textMarket = textMarket;
     this.textProfile = textProfile;
@@ -108,6 +122,12 @@ public final class BottomNavigationBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.iconComunidades;
+      TextView iconComunidades = ViewBindings.findChildViewById(rootView, id);
+      if (iconComunidades == null) {
+        break missingId;
+      }
+
       id = R.id.iconHome;
       TextView iconHome = ViewBindings.findChildViewById(rootView, id);
       if (iconHome == null) {
@@ -129,6 +149,12 @@ public final class BottomNavigationBinding implements ViewBinding {
       id = R.id.navBus;
       LinearLayout navBus = ViewBindings.findChildViewById(rootView, id);
       if (navBus == null) {
+        break missingId;
+      }
+
+      id = R.id.navComunidades;
+      LinearLayout navComunidades = ViewBindings.findChildViewById(rootView, id);
+      if (navComunidades == null) {
         break missingId;
       }
 
@@ -156,6 +182,12 @@ public final class BottomNavigationBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.textComunidades;
+      TextView textComunidades = ViewBindings.findChildViewById(rootView, id);
+      if (textComunidades == null) {
+        break missingId;
+      }
+
       id = R.id.textHome;
       TextView textHome = ViewBindings.findChildViewById(rootView, id);
       if (textHome == null) {
@@ -174,9 +206,9 @@ public final class BottomNavigationBinding implements ViewBinding {
         break missingId;
       }
 
-      return new BottomNavigationBinding((LinearLayout) rootView, iconBus, iconHome, iconMarket,
-          iconProfile, navBus, navHome, navMarket, navProfile, textBus, textHome, textMarket,
-          textProfile);
+      return new BottomNavigationBinding((LinearLayout) rootView, iconBus, iconComunidades,
+          iconHome, iconMarket, iconProfile, navBus, navComunidades, navHome, navMarket, navProfile,
+          textBus, textComunidades, textHome, textMarket, textProfile);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

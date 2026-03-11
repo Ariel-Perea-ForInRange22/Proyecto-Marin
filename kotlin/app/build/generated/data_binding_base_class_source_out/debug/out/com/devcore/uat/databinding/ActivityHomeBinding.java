@@ -31,6 +31,9 @@ public final class ActivityHomeBinding implements ViewBinding {
   public final CardView cardBusTracking;
 
   @NonNull
+  public final CardView cardComunidades;
+
+  @NonNull
   public final CardView cardMarketplace;
 
   @NonNull
@@ -41,12 +44,14 @@ public final class ActivityHomeBinding implements ViewBinding {
 
   private ActivityHomeBinding(@NonNull CoordinatorLayout rootView,
       @NonNull MaterialButton btnCheckIn, @NonNull MaterialButton btnReport,
-      @NonNull CardView cardBusTracking, @NonNull CardView cardMarketplace,
-      @NonNull CardView cardProfile, @NonNull RelativeLayout header) {
+      @NonNull CardView cardBusTracking, @NonNull CardView cardComunidades,
+      @NonNull CardView cardMarketplace, @NonNull CardView cardProfile,
+      @NonNull RelativeLayout header) {
     this.rootView = rootView;
     this.btnCheckIn = btnCheckIn;
     this.btnReport = btnReport;
     this.cardBusTracking = cardBusTracking;
+    this.cardComunidades = cardComunidades;
     this.cardMarketplace = cardMarketplace;
     this.cardProfile = cardProfile;
     this.header = header;
@@ -97,6 +102,12 @@ public final class ActivityHomeBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.cardComunidades;
+      CardView cardComunidades = ViewBindings.findChildViewById(rootView, id);
+      if (cardComunidades == null) {
+        break missingId;
+      }
+
       id = R.id.cardMarketplace;
       CardView cardMarketplace = ViewBindings.findChildViewById(rootView, id);
       if (cardMarketplace == null) {
@@ -116,7 +127,7 @@ public final class ActivityHomeBinding implements ViewBinding {
       }
 
       return new ActivityHomeBinding((CoordinatorLayout) rootView, btnCheckIn, btnReport,
-          cardBusTracking, cardMarketplace, cardProfile, header);
+          cardBusTracking, cardComunidades, cardMarketplace, cardProfile, header);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

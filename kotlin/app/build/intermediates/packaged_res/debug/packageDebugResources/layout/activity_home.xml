@@ -276,7 +276,7 @@
                 style="@style/DevCoreCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_medium"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -314,6 +314,64 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Ver reputación, rachas y logros"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="→"
+                        android:textColor="@color/uat_naranja"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Comunidades Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardComunidades"
+                style="@style/DevCoreCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/gradient_stats"
+                        android:gravity="center"
+                        android:text="👥"
+                        android:textSize="30sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Comunidades"
+                            android:textColor="@color/uat_azul"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Únete a grupos de tu facultad"
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>

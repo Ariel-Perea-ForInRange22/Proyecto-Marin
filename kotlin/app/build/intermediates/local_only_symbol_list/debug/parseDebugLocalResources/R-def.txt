@@ -71,6 +71,7 @@ id btnReport
 id btnSettings
 id btnYaPaso
 id cardBusTracking
+id cardComunidades
 id cardFileUpload
 id cardMarketplace
 id cardProfile
@@ -89,10 +90,12 @@ id etEmail
 id etMatricula
 id etNombre
 id etPassword
+id fabCreateCommunity
 id fabPublicar
 id footer
 id header
 id iconBus
+id iconComunidades
 id iconHome
 id iconMarket
 id iconProfile
@@ -100,6 +103,7 @@ id logoBackground
 id logoGradient
 id logoIcon
 id navBus
+id navComunidades
 id navHome
 id navMarket
 id navProfile
@@ -109,6 +113,7 @@ id spinnerRuta
 id subtitle
 id tagline
 id textBus
+id textComunidades
 id textHome
 id textMarket
 id textProfile
@@ -123,6 +128,7 @@ id tvReportesFalsos
 id tvReportesVerificados
 id tvTasaPrecision
 layout activity_bus_tracking
+layout activity_comunidades
 layout activity_home
 layout activity_login
 layout activity_marketplace

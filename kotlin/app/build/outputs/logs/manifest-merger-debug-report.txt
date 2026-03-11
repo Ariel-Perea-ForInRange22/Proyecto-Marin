@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-74:12
-INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-74:12
-INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-74:12
-INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-74:12
+ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-80:12
+INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:2:1-80:12
 MERGED from [androidx.databinding:viewbinding:8.3.0] C:\Users\jesus\.gradle\caches\transforms-3\4f463d62350914fa16bb6fb4b9d56b17\transformed\viewbinding-8.3.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\jesus\.gradle\caches\transforms-3\dcbd3d91ac72e3a4d2d0d503249b0aa9\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\jesus\.gradle\caches\transforms-3\5c1c6b66cdf1da7fe1ae943e90543e46\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
@@ -98,8 +98,8 @@ ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml
 	android:name
 		ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:7:5-72:19
-INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:7:5-72:19
+ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:7:5-78:19
+INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:7:5-78:19
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\jesus\.gradle\caches\transforms-3\dcbd3d91ac72e3a4d2d0d503249b0aa9\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\jesus\.gradle\caches\transforms-3\dcbd3d91ac72e3a4d2d0d503249b0aa9\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\jesus\.gradle\caches\transforms-3\5c1c6b66cdf1da7fe1ae943e90543e46\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -218,6 +218,14 @@ ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml
 		ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:70:13-49
 	android:name
 		ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:68:13-63
+activity#com.devcore.uat.ComunidadesActivity
+ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:73:9-76:52
+	android:exported
+		ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:75:13-37
+	android:theme
+		ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:76:13-49
+	android:name
+		ADDED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml:74:13-63
 uses-sdk
 INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\jesus\Proyecto-Marin\kotlin\app\src\main\AndroidManifest.xml

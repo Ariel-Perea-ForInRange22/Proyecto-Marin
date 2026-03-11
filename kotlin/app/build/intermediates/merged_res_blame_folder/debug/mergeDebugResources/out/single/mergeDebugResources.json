@@ -4,6 +4,10 @@
         "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\drawable\\gradient_profile.xml"
     },
     {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\layout_activity_comunidades.xml.flat",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_comunidades.xml"
+    },
+    {
         "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\drawable_bg_file_upload.xml.flat",
         "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\drawable\\bg_file_upload.xml"
     },
@@ -32,6 +36,10 @@
         "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
+        "merged": "com.devcore.uat.app-debug-67:/layout_bottom_navigation.xml.flat",
+        "source": "com.devcore.uat.app-main-69:/layout/bottom_navigation.xml"
+    },
+    {
         "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\drawable_badge_success.xml.flat",
         "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\drawable\\badge_success.xml"
     },
@@ -46,10 +54,6 @@
     {
         "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\drawable_bg_product_image.xml.flat",
         "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\drawable\\bg_product_image.xml"
-    },
-    {
-        "merged": "com.devcore.uat.app-debug-67:/layout_activity_home.xml.flat",
-        "source": "com.devcore.uat.app-main-69:/layout/activity_home.xml"
     },
     {
         "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\layout_activity_login.xml.flat",
@@ -80,12 +84,12 @@
         "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\bottom_navigation.xml"
     },
     {
-        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\drawable_ic_launcher_background.xml.flat",
-        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\drawable\\ic_launcher_background.xml"
-    },
-    {
         "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\drawable_gradient_header.xml.flat",
         "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\drawable\\gradient_header.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\drawable\\ic_launcher_background.xml"
     },
     {
         "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-debug-67:\\xml_data_extraction_rules.xml.flat",
