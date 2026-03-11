@@ -32,6 +32,10 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
 
+        binding.cardComunidades.setOnClickListener {
+            startActivity(Intent(this, ComunidadesActivity::class.java))
+        }
+
         binding.btnCheckIn.setOnClickListener {
             Toast.makeText(this, "¡Check-in completado! +5 puntos", Toast.LENGTH_SHORT).show()
         }
@@ -51,6 +55,11 @@ class HomeActivity : AppCompatActivity() {
 
         binding.root.findViewById<android.view.View>(R.id.navMarket)?.setOnClickListener {
             startActivity(Intent(this, MarketplaceActivity::class.java))
+            finish()
+        }
+
+        binding.root.findViewById<android.view.View>(R.id.navComunidades)?.setOnClickListener {
+            startActivity(Intent(this, ComunidadesActivity::class.java))
             finish()
         }
 

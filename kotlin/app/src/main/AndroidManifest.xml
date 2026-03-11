@@ -69,6 +69,12 @@
             android:exported="false"
             android:theme="@style/Theme.DevCore" />
 
+        <!-- Comunidades Activity -->
+        <activity
+            android:name="com.devcore.uat.ComunidadesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
     </application>
 
 </manifest>

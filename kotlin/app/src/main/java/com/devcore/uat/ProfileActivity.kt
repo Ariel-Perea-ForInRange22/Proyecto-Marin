@@ -52,6 +52,10 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, MarketplaceActivity::class.java))
             finish()
         }
+        binding.root.findViewById<android.view.View>(R.id.navComunidades)?.setOnClickListener {
+            startActivity(Intent(this, ComunidadesActivity::class.java))
+            finish()
+        }
     }
 
     private fun loadUserProfile() {

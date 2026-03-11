@@ -52,6 +52,9 @@ class BusTrackingActivity : AppCompatActivity() {
         binding.root.findViewById<android.view.View>(R.id.navMarket)?.setOnClickListener {
             startActivity(Intent(this, MarketplaceActivity::class.java)); finish()
         }
+        binding.root.findViewById<android.view.View>(R.id.navComunidades)?.setOnClickListener {
+            startActivity(Intent(this, ComunidadesActivity::class.java)); finish()
+        }
         binding.root.findViewById<android.view.View>(R.id.navProfile)?.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java)); finish()
         }

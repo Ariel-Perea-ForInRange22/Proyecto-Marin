@@ -100,6 +100,36 @@
             android:textSize="11sp" />
     </LinearLayout>
 
+    <!-- Comunidades -->
+    <LinearLayout
+        android:id="@+id/navComunidades"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/iconComunidades"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="👥"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textComunidades"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Grupos"
+            android:textColor="@color/uat_gris"
+            android:textSize="11sp" />
+    </LinearLayout>
+
     <!-- Profile -->
     <LinearLayout
         android:id="@+id/navProfile"
