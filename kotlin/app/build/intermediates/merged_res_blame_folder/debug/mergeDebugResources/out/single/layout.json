@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_pending.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_pending.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_register.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "com.devcore.uat.app-mergeDebugResources-66:/layout/bottom_navigation.xml",
+        "source": "com.devcore.uat.app-main-69:/layout/bottom_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\bottom_navigation.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\bottom_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_marketplace.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_marketplace.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_splash.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_bus_tracking.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_bus_tracking.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_home.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_profile.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-mergeDebugResources-66:\\layout\\activity_comunidades.xml",
+        "source": "C:\\Users\\jesus\\.gradle\\daemon\\8.4\\com.devcore.uat.app-main-69:\\layout\\activity_comunidades.xml"
+    }
+]

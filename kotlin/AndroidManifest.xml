@@ -12,16 +12,60 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DevCore"
         tools:targetApi="31">
+
+        <!-- Splash Activity - Pantalla de inicio -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.devcore.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.DevCore">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Login Activity -->
+        <activity
+            android:name="com.devcore.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Register Activity -->
+        <activity
+            android:name="com.devcore.RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Pending Activity -->
+        <activity
+            android:name="com.devcore.PendingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Home Activity -->
+        <activity
+            android:name="com.devcore.HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Bus Tracking Activity -->
+        <activity
+            android:name="com.devcore.BusTrackingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Profile Activity -->
+        <activity
+            android:name="com.devcore.ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Marketplace Activity -->
+        <activity
+            android:name="com.devcore.MarketplaceActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
     </application>
 
 </manifest>

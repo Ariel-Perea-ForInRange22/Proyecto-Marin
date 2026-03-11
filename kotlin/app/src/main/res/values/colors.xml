@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores UAT - Paleta Pastel -->
+    <color name="uat_naranja">#FFB39C</color>
+    <color name="uat_naranja_hover">#FF9F85</color>
+    <color name="uat_azul">#8AB4D7</color>
+    <color name="uat_azul_hover">#6FA3CC</color>
+    <color name="uat_gris">#B8BCC2</color>
+    <color name="uat_gris_claro">#F5F6F8</color>
+    <color name="uat_blanco">#FFFFFF</color>
+    <color name="uat_negro">#3D4450</color>
+    <color name="uat_naranja_claro">#FFE5DD</color>
+    <color name="uat_azul_claro">#D6E8F5</color>
+
+    <!-- Colores adicionales -->
+    <color name="verde_pastel">#81C784</color>
+    <color name="rojo_pastel">#EF9A9A</color>
+    <color name="amarillo_pastel">#FFD97D</color>
+
+    <!-- Colores de sistema -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_secondary">#6C757D</color>
+</resources>
+
