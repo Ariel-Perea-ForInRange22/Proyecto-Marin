@@ -36,7 +36,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.btnLogout.setOnClickListener { confirmLogout() }
 
         binding.btnSettings.setOnClickListener {
-            Toast.makeText(this, "Configuración - Próximamente", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         // Bottom Navigation

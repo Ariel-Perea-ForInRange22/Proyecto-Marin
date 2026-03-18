@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -74,6 +76,33 @@
             android:name="com.devcore.uat.ComunidadesActivity"
             android:exported="false"
             android:theme="@style/Theme.DevCore" />
+
+        <!-- Comunidad Mural Activity -->
+        <activity
+            android:name="com.devcore.uat.ComunidadMuralActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- User Search Activity -->
+        <activity
+            android:name="com.devcore.uat.UserSearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- User Profile Posts Activity -->
+        <activity
+            android:name="com.devcore.uat.UserProfilePostsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Settings Activity -->
+        <activity
+            android:name="com.devcore.uat.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore"
+            android:windowSoftInputMode="adjustResize" />
 
     </application>
 

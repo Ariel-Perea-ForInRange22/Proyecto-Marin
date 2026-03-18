@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mural - DevCore</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            color: white;
+            margin-bottom: 5px;
+        }
+        .badge.pendiente { background-color: #E65100; color: white; }
+        .badge.oficial { background-color: #1565C0; color: white; }
+        .badge.staff { background-color: #4CAF50; color: white; font-size: 9px; padding: 2px 5px; margin-left: 5px; vertical-align: middle; }
+        
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #8AB4D7 0%, #FFB39C 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .post-author { font-weight: bold; color: #333; }
+        .post-date { font-size: 12px; color: #888; }
+        .post-content { color: #555; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
+        
+        #composeTextArea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: none;
+            font-family: inherit;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <script src="js/api.js"></script>
+    <script>
+        if (!isAuthenticated()) window.location.href = 'login.html';
+    </script>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header" style="display: flex; align-items: center; gap: 15px;">
+            <a href="comunidades.html" class="back-btn" style="position: static; margin-bottom: 0;">←</a>
+            <div style="flex: 1;">
+                <h1 style="margin: 0; font-size: 20px;">Ingeniería en Sistemas</h1>
+                <p style="margin: 0; font-size: 13px;">Mural de la Comunidad</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Compose area -->
+            <div class="post-card" style="border: 2px solid #eef;">
+                <textarea id="composeTextArea" rows="3" placeholder="¿Qué estás pensando?"></textarea>
+                
+                <div id="staffOptions" style="display: none; margin-bottom: 10px; font-size: 14px; color: #555;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="checkOficial"> Marcar como Comunicado Oficial
+                    </label>
+                </div>
+                
+                <button onclick="submitPost()" class="btn btn-primary" style="width: 100%; padding: 10px; border: none; font-size: 14px;">Publicar</button>
+            </div>
+
+            <!-- Posts Feed -->
+            <div id="postsFeed">
+                <div style="text-align: center; color: #888; padding: 20px;">Cargando publicaciones...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script>
+        let comunidadId = 1; // Fijo por ahora
+        let user = null;
+
+        try {
+            const userStr = localStorage.getItem('devcore_user');
+            if(userStr) user = JSON.parse(userStr);
+        } catch(e) {}
+
+        // Mostrar opciones de staff si el usuario es staff
+        if (user && user.es_staff) {
+            document.getElementById('staffOptions').style.display = 'block';
+        }
+
+        async function loadPosts() {
+            try {
+                const res = await fetchAuth(`/comunidades/${comunidadId}/publicaciones`);
+                if (!res) return;
+                const posts = await res.json();
+                
+                const feed = document.getElementById('postsFeed');
+                feed.innerHTML = '';
+                
+                if(posts.length === 0) {
+                    feed.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">No hay publicaciones aún. Sé el primero.</div>';
+                    return;
+                }
+
+                posts.forEach(post => {
+                    let badgesHtml = '';
+                    if (post.estado === 'PENDIENTE') badgesHtml += `<div class="badge pendiente">PENDIENTE DE REVISIÓN</div> `;
+                    if (post.es_oficial) badgesHtml += `<div class="badge oficial">✨ COMUNICADO OFICIAL ✨</div>`;
+                    
+                    let staffHtml = post.autor.es_staff ? `<span class="badge staff">STAFF</span>` : '';
+                    let inicial = post.autor.nombre.charAt(0).toUpperCase();
+
+                    const postHtml = `
+                        <div class="post-card">
+                            ${badgesHtml}
+                            <div class="post-header">
+                                <div class="avatar">${inicial}</div>
+                                <div>
+                                    <div class="post-author">${post.autor.nombre} ${staffHtml}</div>
+                                    <div class="post-date">${new Date(post.fecha_creacion).toLocaleString()}</div>
+                                </div>
+                            </div>
+                            <div class="post-content">${post.contenido}</div>
+                            <div style="color: #6C757D; font-size: 14px; display: flex; gap: 15px;">
+                                <span>👍 ${post.likes_count} Me gusta</span>
+                                <span>💬 0 Comentarios</span>
+                            </div>
+                        </div>
+                    `;
+                    feed.innerHTML += postHtml;
+                });
+            } catch (err) {
+                console.error(err);
+                document.getElementById('postsFeed').innerHTML = '<div style="text-align:center; color:red;">Error al cargar publicaciones.</div>';
+            }
+        }
+
+        async function submitPost() {
+            const content = document.getElementById('composeTextArea').value.trim();
+            if(!content) return alert("Escribe algo para publicar.");
+            
+            const isOficial = document.getElementById('checkOficial')?.checked || false;
+            
+            try {
+                const res = await fetchAuth(`/comunidades/${comunidadId}/publicaciones`, {
+                    method: 'POST',
+                    body: JSON.stringify({ contenido: content, es_oficial: isOficial })
+                });
+                
+                if (res && res.ok) {
+                    document.getElementById('composeTextArea').value = '';
+                    if(document.getElementById('checkOficial')) document.getElementById('checkOficial').checked = false;
+                    
+                    // Si no es staff, saldrá pendiente, mostramos alert
+                    if(!user || !user.es_staff) {
+                        alert("Publicación enviada. Pendiente de revisión por un administrador.");
+                    }
+                    loadPosts();
+                } else {
+                    alert("Error al publicar.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Error de red.");
+            }
+        }
+
+        // Init
+        loadPosts();
+    </script>
+</body>
+</html>

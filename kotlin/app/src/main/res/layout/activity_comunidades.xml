@@ -93,6 +93,7 @@
 
             <!-- Card Comunidad 1 -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardSistemas"
                 style="@style/DevCoreCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,6 +141,7 @@
 
             <!-- Card Comunidad 2 -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardGaming"
                 style="@style/DevCoreCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

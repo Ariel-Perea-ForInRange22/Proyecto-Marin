@@ -18,6 +18,7 @@ class SessionManager(private val context: Context) {
         val JWT_TOKEN = stringPreferencesKey("jwt_token")
         val REMEMBER_ME = booleanPreferencesKey("remember_me")
         val SAVED_EMAIL = stringPreferencesKey("saved_email")
+        val BIOMETRIC_ENABLED = booleanPreferencesKey("biometric_enabled")
     }
 
     suspend fun saveAuthToken(token: String, rememberMe: Boolean, email: String) {
@@ -29,6 +30,13 @@ class SessionManager(private val context: Context) {
             } else {
                 prefs.remove(SAVED_EMAIL)
             }
+        }
+    }
+
+    /** Persiste localmente si el usuario activó la huella digital */
+    suspend fun saveBiometricEnabled(enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[BIOMETRIC_ENABLED] = enabled
         }
     }
 
@@ -44,13 +52,20 @@ class SessionManager(private val context: Context) {
         prefs[SAVED_EMAIL]
     }
 
+    /** true si el usuario habilitó la huella en Configuración */
+    val biometricEnabledFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[BIOMETRIC_ENABLED] ?: false
+    }
+
     suspend fun clearSession() {
         context.dataStore.edit { prefs ->
             prefs.remove(JWT_TOKEN)
+            // NO borrar BIOMETRIC_ENABLED ni SAVED_EMAIL si remember_me está activo
             val isRemember = prefs[REMEMBER_ME] ?: false
             if (!isRemember) {
                 prefs.remove(SAVED_EMAIL)
             }
+            // La preferencia de huella se mantiene para el próximo login
         }
     }
 }

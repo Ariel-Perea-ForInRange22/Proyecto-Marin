@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <form>
+            <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="email">Correo Institucional</label>
                     <input type="email" id="email" placeholder="ejemplo@uat.edu.mx" required>
@@ -39,7 +39,7 @@
                     <a href="#" style="color: #FFB39C; font-size: 14px; text-decoration: none;">¿Olvidaste tu contraseña?</a>
                 </div>
 
-                <a href="home.html" class="btn btn-primary" style="margin-bottom: 15px;">Entrar</a>
+                <button type="submit" class="btn btn-primary" style="margin-bottom: 15px; width: 100%; border: none; cursor: pointer; text-align: center; font-size: 16px;">Entrar</button>
                 
                 <div style="text-align: center; margin: 20px 0;">
                     <span style="color: #6C757D; font-size: 14px;">o</span>
@@ -49,5 +49,52 @@
             </form>
         </div>
     </div>
+
+    <!-- Scripts de Conexión a la API -->
+    <script src="js/api.js"></script>
+    <script>
+        // Redirigir si ya está logueado
+        if (isAuthenticated()) {
+            window.location.href = 'home.html';
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            const formData = new URLSearchParams();
+            formData.append("username", email);
+            formData.append("password", password);
+            
+            try {
+                const res = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                const json = await res.json();
+                
+                if (res.ok) {
+                    localStorage.setItem('devcore_token', json.access_token);
+                    
+                    // Opcionalmente podemos pedir los datos del usuario aquí para guardarlos globalmente
+                    const authRes = await fetch(`${API_URL}/usuarios/me`, {
+                        headers: { 'Authorization': `Bearer ${json.access_token}` }
+                    });
+                    if (authRes.ok) {
+                        const userData = await authRes.json();
+                        localStorage.setItem('devcore_user', JSON.stringify(userData));
+                    }
+                    
+                    window.location.href = 'home.html';
+                } else {
+                    alert("Error al iniciar sesión: " + (json.detail || "Datos incorrectos"));
+                }
+            } catch(error) {
+                alert("Error de red conectando al servidor.");
+            }
+        }
+    </script>
 </body>
 </html>

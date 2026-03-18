@@ -22,7 +22,7 @@
                 Tu cuenta será validada por el personal administrativo en menos de 24 horas.
             </div>
 
-            <form>
+            <form onsubmit="handleRegister(event)">
                 <div class="form-group">
                     <label for="nombre">Nombre Completo</label>
                     <input type="text" id="nombre" placeholder="Ingresa tu nombre completo" required>
@@ -67,11 +67,46 @@
                     </label>
                 </div>
 
-                <a href="pending.html" class="btn btn-primary" style="margin-bottom: 15px;">Registrarse</a>
+                <button type="submit" class="btn btn-primary" style="margin-bottom: 15px; width: 100%; border: none; cursor: pointer; text-align: center; font-size: 16px;">Registrarse</button>
                 
                 <a href="login.html" class="btn btn-outline">Ya tengo cuenta</a>
             </form>
         </div>
     </div>
+
+    <!-- Scripts de Conexión a la API -->
+    <script src="js/api.js"></script>
+    <script>
+        async function handleRegister(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm-password').value;
+            
+            if (password !== confirm) {
+                alert("Las contraseñas no coinciden");
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${API_URL}/usuarios/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, email, password })
+                });
+                const json = await res.json();
+                
+                if (res.ok) {
+                    alert("Cuenta creada correctamente. ¡Ahora inicia sesión!");
+                    window.location.href = 'login.html';
+                } else {
+                    alert("Error al registrar: " + JSON.stringify(json));
+                }
+            } catch(error) {
+                alert("Error de red conectando al servidor.");
+            }
+        }
+    </script>
 </body>
 </html>

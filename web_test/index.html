@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tester API - Proyecto Marín</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: #333; }
+        .panel { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        input, button { padding: 10px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+        button { background: #E65100; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #BF360C; }
+        pre { background: #eef; padding: 10px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }
+        .post { background: #fafafa; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 4px; }
+        .badge { display: inline-block; padding: 3px 6px; font-size: 11px; font-weight: bold; border-radius: 3px; color: white; }
+        .badge.pendiente { background: #F44336; }
+        .badge.oficial { background: #2196F3; }
+        .badge.aprobada { background: #4CAF50; }
+        .btn-small { width: auto; padding: 5px 10px; font-size: 12px; margin-right: 5px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ Tester API - Comunidad</h1>
+        <p>Abre el servidor FastAPI (`uvicorn app.main:app --reload`) antes de usar esto.</p>
+        
+        <div class="panel">
+            <h2>1. Autenticación</h2>
+            <input type="email" id="email" placeholder="Correo (ej. test@uat.edu.mx)" value="test@uat.edu.mx">
+            <input type="password" id="password" placeholder="Contraseña" value="1234">
+            <button onclick="registrar()">Registrar</button>
+            <button onclick="login()">Iniciar Sesión</button>
+            <p><strong>Token:</strong> <span id="tokenStatus">No autenticado</span></p>
+        </div>
+
+        <div class="panel">
+            <h2>2. Buscar Usuarios</h2>
+            <input type="text" id="searchQuery" placeholder="Nombre a buscar...">
+            <button onclick="buscarUsuarios()">Buscar</button>
+            <pre id="searchResults">Resultados aparecerán aquí...</pre>
+        </div>
+
+        <div class="panel">
+            <h2>3. Comunidad (ID: 1)</h2>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="verMuro()">Ver Muro (Aprobados)</button>
+                <button onclick="verPendientes()">Ver Pendientes (Solo Staff)</button>
+            </div>
+            
+            <hr>
+            <h3>Publicar</h3>
+            <input type="text" id="postContent" placeholder="¿Qué estás pensando?">
+            <label><input type="checkbox" id="isOfficial"> Marcar como Comunicado Oficial (Requiere ser Staff)</label>
+            <button onclick="publicar()">Enviar Publicación</button>
+            
+            <div id="postsList" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8080";
+        let currentToken = "";
+
+        async function registrar() {
+            const data = {
+                nombre: "Usuario Prueba",
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+            const res = await fetch(`${API_URL}/usuarios/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const json = await res.json();
+            alert(res.ok ? "Registrado correctamente" : "Error: " + JSON.stringify(json));
+        }
+
+        async function login() {
+            const formData = new URLSearchParams();
+            formData.append("username", document.getElementById('email').value);
+            formData.append("password", document.getElementById('password').value);
+            
+            const res = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            });
+            const json = await res.json();
+            if(res.ok) {
+                currentToken = json.access_token;
+                document.getElementById('tokenStatus').innerText = "✅ " + currentToken.substring(0, 15) + "...";
+            } else {
+                alert("Error: " + JSON.stringify(json));
+            }
+        }
+
+        async function buscarUsuarios() {
+            const q = document.getElementById('searchQuery').value;
+            const res = await fetch(`${API_URL}/usuarios/buscar?q=${q}`);
+            const json = await res.json();
+            document.getElementById('searchResults').innerText = JSON.stringify(json, null, 2);
+        }
+
+        async function verMuro() {
+            const res = await fetch(`${API_URL}/comunidades/1/publicaciones`);
+            const json = await res.json();
+            renderPosts(json, false);
+        }
+
+        async function verPendientes() {
+            if(!currentToken) return alert("Inicia sesión primero");
+            const res = await fetch(`${API_URL}/comunidades/1/pendientes`, {
+                headers: { 'Authorization': `Bearer ${currentToken}` }
+            });
+            if(!res.ok) return alert("Error/Permisos: " + (await res.text()));
+            const json = await res.json();
+            renderPosts(json, true);
+        }
+
+        async function publicar() {
+            if(!currentToken) return alert("Inicia sesión primero");
+            const data = {
+                contenido: document.getElementById('postContent').value,
+                es_oficial: document.getElementById('isOfficial').checked
+            };
+            const res = await fetch(`${API_URL}/comunidades/1/publicaciones`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentToken}` 
+                },
+                body: JSON.stringify(data)
+            });
+            if(res.ok) {
+                alert("Publicado");
+                verMuro();
+            } else {
+                alert("Error: " + (await res.text()));
+            }
+        }
+
+        async function cambiarEstado(pubId, estado) {
+            const res = await fetch(`${API_URL}/comunidades/1/publicaciones/${pubId}/estado`, {
+                method: 'PATCH',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentToken}` 
+                },
+                body: JSON.stringify({ estado: estado })
+            });
+            if(res.ok) {
+                alert(`Post marcado como ${estado}`);
+                verPendientes();
+            } else {
+                alert("Error: " + (await res.text()));
+            }
+        }
+
+        function renderPosts(posts, isModeration) {
+            const div = document.getElementById('postsList');
+            div.innerHTML = "";
+            posts.forEach(p => {
+                let badges = "";
+                if(p.estado === "PENDIENTE") badges += `<span class="badge pendiente">PENDIENTE</span> `;
+                if(p.estado === "APROBADA") badges += `<span class="badge aprobada">APROBADA</span> `;
+                if(p.es_oficial) badges += `<span class="badge oficial">OFICIAL</span> `;
+                
+                let btns = "";
+                if(isModeration && p.estado === "PENDIENTE") {
+                    btns = `<br><br>
+                    <button class="btn-small" style="background:green" onclick="cambiarEstado(${p.id}, 'APROBADA')">Aprobar</button>
+                    <button class="btn-small" style="background:red" onclick="cambiarEstado(${p.id}, 'RECHAZADA')">Rechazar</button>`;
+                }
+
+                div.innerHTML += `
+                    <div class="post">
+                        <strong>${p.autor.nombre}</strong> ${badges}<br>
+                        <small>${new Date(p.fecha_creacion).toLocaleString()}</small><br><br>
+                        ${p.contenido}
+                        ${btns}
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

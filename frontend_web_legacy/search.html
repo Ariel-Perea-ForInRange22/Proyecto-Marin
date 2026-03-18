@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Usuarios - DevCore</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="js/api.js"></script>
+    <script>
+        if (!isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <div class="container">
+        <!-- Header -->
+        <div class="header" style="display: flex; align-items: center; gap: 10px; padding-bottom: 20px;">
+            <a href="home.html" class="back-btn" style="position: static; margin: 0;">←</a>
+            <input type="text" id="searchInput" placeholder="Buscar alumnos o staff..." style="flex: 1; padding: 12px; border-radius: 20px; border: 1px solid #ddd; outline: none;">
+            <button onclick="doSearch()" class="btn btn-primary" style="padding: 10px 20px; border-radius: 20px; border: none; margin: 0; cursor: pointer;">Buscar</button>
+        </div>
+
+        <div class="content" id="searchResults" style="margin-top: 10px;">
+            <div style="text-align: center; color: #888; padding: 40px 20px;">
+                <div style="font-size: 40px; margin-bottom: 10px;">🔎</div>
+                Ingresa el nombre de un estudiante o miembro del staff para buscar su perfil.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Trigger search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+
+        async function doSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if(!query) return;
+            
+            const resArea = document.getElementById('searchResults');
+            resArea.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;">Buscando...</div>';
+            
+            try {
+                const res = await fetchAuth(`/usuarios/buscar?q=${query}`);
+                if(!res) return;
+                const users = await res.json();
+                
+                resArea.innerHTML = '';
+                if(users.length === 0) {
+                    resArea.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">No se encontraron resultados para "' + query + '".</div>';
+                    return;
+                }
+                
+                users.forEach(u => {
+                    let staffHtml = u.es_staff ? `<span style="background:#4CAF50; color:white; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:8px; font-weight:bold; vertical-align:middle;">STAFF</span>` : '';
+                    resArea.innerHTML += `
+                    <a href="profile.html?id=${u.id}" style="text-decoration: none; color: inherit;">
+                        <div class="card" style="display: flex; align-items: center; gap: 15px; margin-bottom: 12px; padding: 15px; border-radius: 12px; transition: transform 0.2s;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #8AB4D7 0%, #FFB39C 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;">
+                                ${u.nombre.charAt(0).toUpperCase()}
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">${u.nombre} ${staffHtml}</div>
+                                <div style="font-size: 13px; color: #6C757D;">@${u.email.split('@')[0]}</div>
+                            </div>
+                            <div style="color: #8AB4D7; font-size: 20px;">→</div>
+                        </div>
+                    </a>`;
+                });
+            } catch(e) {
+                console.error(e);
+                resArea.innerHTML = '<div style="text-align: center; color: red; padding: 20px;">Error al conectar con el servidor.</div>';
+            }
+        }
+    </script>
+</body>
+</html>

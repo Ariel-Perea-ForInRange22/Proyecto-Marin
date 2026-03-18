@@ -23,6 +23,23 @@ class ComunidadesActivity : AppCompatActivity() {
         binding.fabCreateCommunity.setOnClickListener {
             Toast.makeText(this, "Crear nueva comunidad (Próximamente)", Toast.LENGTH_SHORT).show()
         }
+        
+        // Simulación: Al hacer clic en la tarjeta, vamos al muro
+        binding.root.findViewById<android.view.View>(R.id.cardSistemas)?.setOnClickListener {
+            val intent = Intent(this, ComunidadMuralActivity::class.java).apply {
+                putExtra("COMUNIDAD_ID", 1)
+                putExtra("COMUNIDAD_NOMBRE", "Ingeniería en Sistemas")
+            }
+            startActivity(intent)
+        }
+
+        binding.root.findViewById<android.view.View>(R.id.cardGaming)?.setOnClickListener {
+            val intent = Intent(this, ComunidadMuralActivity::class.java).apply {
+                putExtra("COMUNIDAD_ID", 2)
+                putExtra("COMUNIDAD_NOMBRE", "Gaming UAT")
+            }
+            startActivity(intent)
+        }
     }
 
     private fun setupBottomNavigation() {
