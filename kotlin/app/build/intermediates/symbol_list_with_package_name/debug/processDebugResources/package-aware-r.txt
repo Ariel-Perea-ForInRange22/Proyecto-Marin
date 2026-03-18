@@ -77,6 +77,11 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array assume_strong_biometrics_models
+array crypto_fingerprint_fallback_prefixes
+array crypto_fingerprint_fallback_vendors
+array delay_showing_prompt_models
+array hide_fingerprint_instantly_prefixes
 attr SharedValue
 attr SharedValueId
 attr action
@@ -1126,6 +1131,7 @@ attr suffixText
 attr suffixTextAppearance
 attr suffixTextColor
 attr suggestionRowLayout
+attr swipeRefreshLayoutProgressSpinnerBackgroundColor
 attr switchMinWidth
 attr switchPadding
 attr switchStyle
@@ -1377,6 +1383,7 @@ color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
 color background_material_light
+color biometric_error_color
 color black
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
@@ -2114,6 +2121,7 @@ color switch_thumb_material_dark
 color switch_thumb_material_light
 color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
+color text_primary
 color text_secondary
 color tooltip_background_dark
 color tooltip_background_light
@@ -2278,6 +2286,7 @@ dimen disabled_alpha_material_light
 dimen fastscroll_default_thickness
 dimen fastscroll_margin
 dimen fastscroll_minimum_range
+dimen fingerprint_icon_size
 dimen highlight_alpha_material_colored
 dimen highlight_alpha_material_dark
 dimen highlight_alpha_material_light
@@ -3027,6 +3036,7 @@ drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
 drawable badge_secondary
+drawable badge_staff
 drawable badge_success
 drawable bg_back_button
 drawable bg_circle_gradient
@@ -3048,6 +3058,8 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable fingerprint_dialog_error
+drawable fingerprint_dialog_fp_icon
 drawable gradient_header
 drawable gradient_marketplace
 drawable gradient_profile
@@ -3145,6 +3157,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable spinner_background
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -3249,6 +3262,7 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
+id btnApprove
 id btnBack
 id btnBackToLogin
 id btnBuscar
@@ -3257,15 +3271,21 @@ id btnCatElectronicos
 id btnCatLibros
 id btnCatRopa
 id btnCheckIn
+id btnClearSearch
+id btnComment
 id btnEditarPublicacion
+id btnFechaNacimiento
+id btnGuardar
 id btnLogin
 id btnLoginSubmit
 id btnLogout
 id btnNoPaso
 id btnRegister
 id btnRegisterSubmit
+id btnReject
 id btnReport
 id btnSettings
+id btnSubmitPost
 id btnYaPaso
 id buttonPanel
 id cache_measures
@@ -3274,8 +3294,10 @@ id cancel_button
 id cardBusTracking
 id cardComunidades
 id cardFileUpload
+id cardGaming
 id cardMarketplace
 id cardProfile
+id cardSistemas
 id carryVelocity
 id cbRemember
 id cbTerms
@@ -3366,10 +3388,14 @@ id enterAlways
 id enterAlwaysCollapsed
 id etBuscar
 id etConfirmPassword
+id etCorreoRecuperacion
 id etEmail
+id etGrupo
 id etMatricula
 id etNombre
 id etPassword
+id etPostContent
+id etSearchUser
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3380,6 +3406,10 @@ id fill
 id fill_horizontal
 id fill_vertical
 id filled
+id fingerprint_description
+id fingerprint_error
+id fingerprint_icon
+id fingerprint_subtitle
 id fitCenter
 id fitEnd
 id fitStart
@@ -3435,6 +3465,7 @@ id jumpToEnd
 id jumpToStart
 id labeled
 id layout
+id layoutModerationButtons
 id left
 id leftToRight
 id legacy
@@ -3581,6 +3612,9 @@ id right_icon
 id right_side
 id rounded
 id row_index_key
+id rvPosts
+id rvUserPosts
+id rvUsers
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
@@ -3622,6 +3656,7 @@ id south
 id spacer
 id special_effects_controller_view_tag
 id spinnerRuta
+id spinnerSemestre
 id spline
 id split_action_bar
 id spread
@@ -3644,6 +3679,8 @@ id submenuarrow
 id submit_area
 id subtitle
 id supportScrollUp
+id swipeRefreshLayout
+id switchHuella
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -3696,16 +3733,33 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tvAvatar
+id tvBadgeOfficial
+id tvBadgePending
+id tvBiometricStatus
+id tvCommunityMembers
+id tvCommunityName
 id tvEmail
+id tvEmptyPosts
+id tvEmptyState
 id tvForgotPassword
 id tvMapPin
 id tvNivelConfianza
 id tvNombre
+id tvPostAuthorName
+id tvPostContent
+id tvPostDate
+id tvProfileAvatar
+id tvProfileInfo
+id tvProfileName
 id tvProgressLabel
 id tvRachaDias
 id tvReportesFalsos
 id tvReportesVerificados
+id tvStaffBadge
 id tvTasaPrecision
+id tvUserEmail
+id tvUserName
 id unchecked
 id uniform
 id unlabeled
@@ -3845,6 +3899,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_bus_tracking
+layout activity_comunidad_mural
 layout activity_comunidades
 layout activity_home
 layout activity_login
@@ -3852,7 +3907,10 @@ layout activity_marketplace
 layout activity_pending
 layout activity_profile
 layout activity_register
+layout activity_settings
 layout activity_splash
+layout activity_user_profile_posts
+layout activity_user_search
 layout bottom_navigation
 layout custom_dialog
 layout design_bottom_navigation_item
@@ -3870,8 +3928,11 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout fingerprint_dialog_layout
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
+layout item_publicacion
+layout item_usuario_search
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -3985,7 +4046,9 @@ string character_counter_pattern
 string clear_text_end_icon_content_description
 string close_drawer
 string close_sheet
+string confirm_device_credential_password
 string default_error_message
+string default_error_msg
 string default_popup_window_title
 string dropdown_menu
 string error_a11y_label
@@ -3993,6 +4056,16 @@ string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
+string fingerprint_dialog_touch_sensor
+string fingerprint_error_hw_not_available
+string fingerprint_error_hw_not_present
+string fingerprint_error_lockout
+string fingerprint_error_no_fingerprints
+string fingerprint_error_user_canceled
+string fingerprint_not_recognized
+string generic_error_no_device_credential
+string generic_error_no_keyguard
+string generic_error_user_canceled
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string in_progress
@@ -5448,6 +5521,7 @@ styleable State android_id constraints
 styleable StateListDrawable android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
 styleable StateListDrawableItem android_drawable
 styleable StateSet defaultState
+styleable SwipeRefreshLayout swipeRefreshLayoutProgressSpinnerBackgroundColor
 styleable SwitchCompat android_textOn android_textOff android_thumb showText splitTrack switchMinWidth switchPadding switchTextAppearance thumbTextPadding thumbTint thumbTintMode track trackTint trackTintMode
 styleable SwitchMaterial useMaterialThemeColors
 styleable TabItem android_icon android_layout android_text

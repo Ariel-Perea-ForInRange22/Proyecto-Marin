@@ -3,6 +3,7 @@
     <color name="amarillo_pastel">#FFD97D</color>
     <color name="black">#000000</color>
     <color name="rojo_pastel">#EF9A9A</color>
+    <color name="text_primary">#212529</color>
     <color name="text_secondary">#6C757D</color>
     <color name="uat_azul">#8AB4D7</color>
     <color name="uat_azul_claro">#D6E8F5</color>

@@ -142,6 +142,8 @@ class ComunidadMuralActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
     private fun cambiarEstadoPost(pubId: Int, nuevoEstado: String) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
