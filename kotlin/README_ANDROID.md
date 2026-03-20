@@ -2,6 +2,8 @@
 
 Migración del diseño web legacy a una aplicación nativa Android usando Kotlin.
 
+> Actualización importante (Marzo 2026): la app ya incluye autenticación biométrica por huella, mejoras UI/UX, módulo de Comunidades funcional y un Marketplace interactivo con búsqueda, filtros, publicación/edición, detalle e imágenes por galería/cámara.
+
 ## 📱 Descripción
 
 DevCore es una plataforma universitaria integral para la Universidad Autónoma de Tamaulipas que incluye:
@@ -100,11 +102,36 @@ app/src/main/
    - Notificaciones
    - Bottom Navigation
 
-### 🔨 Pendientes (Stubs)
+6. **Comunidades** (`ComunidadesActivity` + `CommunityDashboardActivity`)
+   - Listado de comunidades con navegación al dashboard
+   - Tabs: destacados, tus publicaciones, fotos, eventos y archivo
+   - Publicaciones con interacción social (likes/comentarios)
+   - Publicación anónima y selector de sentimiento
+   - Búsqueda y filtros dentro de la comunidad
+   - Adjuntos de imagen/archivo en posts
 
-- **BusTrackingActivity**: Pantalla de seguimiento de buses
-- **ProfileActivity**: Perfil del usuario con logros
-- **MarketplaceActivity**: Marketplace de productos
+7. **MarketplaceActivity**
+   - Listado dinámico con `RecyclerView`
+   - Búsqueda funcional por nombre, descripción y categoría
+   - Filtros por tipo de vendedor y categoría
+   - Alta y edición de productos desde formulario modal
+   - Detalle de producto en ventana emergente
+   - Soporte de imagen por categoría, galería y cámara
+   - Sección de promotores destacados con imagen
+   - Animación para ocultar/mostrar promotores al hacer scroll
+
+8. **LoginActivity (mejorado)**
+   - Acceso biométrico con huella digital (`BiometricPrompt`)
+   - Validación de disponibilidad biométrica
+   - Flujo de sesión persistente y fallback a login tradicional
+   - Recuperación de contraseña (solicitud de código y cambio)
+
+### 📌 Estado actual de módulos
+
+- **BusTrackingActivity**: base funcional de navegación/UI
+- **ProfileActivity**: funcional con manejo de sesión y configuración
+- **MarketplaceActivity**: funcional con flujo completo local
+- **Comunidades**: funcional con feed e interacciones principales
 
 ## 🎨 Características del Diseño
 
@@ -187,23 +214,28 @@ HomeActivity
 └── Profile
 ```
 
+## 🆕 Cambios recientes (resumen general)
+
+- Integración de autenticación biométrica por huella en `LoginActivity`.
+- Mejoras de persistencia de sesión y estabilidad en flujos de navegación.
+- Expansión funcional del módulo de Comunidades.
+- Marketplace convertido de vista estática a flujo interactivo completo.
+- Mejora de experiencia visual con animaciones en secciones dinámicas.
+
 ## 🎯 Próximos Pasos
 
-1. **Implementar pantallas restantes**:
-   - BusTrackingActivity con mapa
-   - ProfileActivity con achievements
-   - MarketplaceActivity con grid de productos
+1. **Persistencia real de datos**:
+   - Guardado persistente de publicaciones e imágenes
+   - Sincronización completa con backend
 
 2. **Conectar con Backend**:
-   - Integrar API REST del backend FastAPI
-   - Implementar autenticación JWT
-   - Sincronización de datos
+   - Integrar API REST del backend FastAPI en Marketplace y Comunidades
+   - Endpoints para productos/publicaciones y subida de media
 
 3. **Funcionalidades Adicionales**:
    - Sistema de notificaciones push
    - Integración con Google Maps
-   - Sistema de carga de imágenes
-   - Gamificación completa
+   - Pulido de accesibilidad e internacionalización (`strings.xml`)
 
 ## 📱 Requisitos
 
@@ -213,19 +245,15 @@ HomeActivity
 - **Kotlin**: 1.9+
 - **Gradle**: 8.0+
 
-## 🏃 Cómo Ejecutar
-
-1. Abrir el proyecto en Android Studio
-2. Sincronizar Gradle: `File → Sync Project with Gradle Files`
-3. Ejecutar en emulador o dispositivo físico
-4. La app iniciará en `SplashActivity`
-
 ## 📝 Notas de Desarrollo
 
 - **ViewBinding**: Habilitado para acceso type-safe a las vistas
 - **Material Design**: Versión 1.11.0 para componentes UI
 - **Sin Compose**: Proyecto usa Views XML tradicionales para máxima compatibilidad
 - **Paleta UAT**: Todos los colores siguen la guía de marca institucional
+- **Biometría**: login con huella habilitado en flujo AndroidX Biometric
+- **Marketplace**: soporte de imágenes por galería/cámara en modo local
+- **Comunidades**: tablero social con tabs y acciones de publicación
 
 ## 👨‍💻 Autor
 
@@ -235,6 +263,5 @@ Universidad Autónoma de Tamaulipas
 
 ---
 
-**Estado del Proyecto**: 🟢 Fase 1 Completada (Login/Register/Home)  
-**Siguiente Fase**: Implementación de módulos principales (Bus/Profile/Marketplace)
-
+**Estado del Proyecto**: 🟢 Fase funcional integrada (Auth + Home + Comunidades + Marketplace)  
+**Siguiente Fase**: Persistencia completa y sincronización backend end-to-end
