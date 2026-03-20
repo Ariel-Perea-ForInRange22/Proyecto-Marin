@@ -1,9 +1,9 @@
-from sqlalchemy import create_engine
+﻿from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# NOTA PARA PRESENTACIÓN: Estamos usando SQLite por ahora para prototipado rápido.
-# Después podemos migrar a PostgreSQL.
+# NOTA PARA PRESENTACI├ôN: Estamos usando SQLite por ahora para prototipado r├ípido.
+# Despu├®s podemos migrar a PostgreSQL.
 SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
 
 # connect_args={"check_same_thread": False} es necesario solo para SQLite en FastAPI
@@ -14,7 +14,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# Dependencia para obtener la sesión de la DB en los endpoints
+# Dependencia para obtener la sesi├│n de la DB en los endpoints
 def get_db():
     db = SessionLocal()
     try:

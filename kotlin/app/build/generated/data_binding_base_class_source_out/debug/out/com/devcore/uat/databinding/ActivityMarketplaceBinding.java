@@ -4,14 +4,18 @@ package com.devcore.uat.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.devcore.uat.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import java.lang.NullPointerException;
@@ -23,9 +27,6 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
   private final CoordinatorLayout rootView;
 
   @NonNull
-  public final View backButtonBg;
-
-  @NonNull
   public final TextView btnBack;
 
   @NonNull
@@ -33,6 +34,9 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
 
   @NonNull
   public final MaterialButton btnCatAccesorios;
+
+  @NonNull
+  public final MaterialButton btnCatComida;
 
   @NonNull
   public final MaterialButton btnCatElectronicos;
@@ -44,7 +48,22 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
   public final MaterialButton btnCatRopa;
 
   @NonNull
+  public final MaterialButton btnCatTodos;
+
+  @NonNull
   public final MaterialButton btnEditarPublicacion;
+
+  @NonNull
+  public final Chip chipAlumnos;
+
+  @NonNull
+  public final ChipGroup chipGroupFiltro;
+
+  @NonNull
+  public final Chip chipPatrocinadores;
+
+  @NonNull
+  public final Chip chipTodos;
 
   @NonNull
   public final TextInputEditText etBuscar;
@@ -52,23 +71,44 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
   @NonNull
   public final FloatingActionButton fabPublicar;
 
-  private ActivityMarketplaceBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull View backButtonBg, @NonNull TextView btnBack, @NonNull MaterialButton btnBuscar,
-      @NonNull MaterialButton btnCatAccesorios, @NonNull MaterialButton btnCatElectronicos,
+  @NonNull
+  public final RecyclerView rvProducts;
+
+  @NonNull
+  public final LinearLayout sectionPromotores;
+
+  @NonNull
+  public final TextView tvEmpty;
+
+  private ActivityMarketplaceBinding(@NonNull CoordinatorLayout rootView, @NonNull TextView btnBack,
+      @NonNull MaterialButton btnBuscar, @NonNull MaterialButton btnCatAccesorios,
+      @NonNull MaterialButton btnCatComida, @NonNull MaterialButton btnCatElectronicos,
       @NonNull MaterialButton btnCatLibros, @NonNull MaterialButton btnCatRopa,
-      @NonNull MaterialButton btnEditarPublicacion, @NonNull TextInputEditText etBuscar,
-      @NonNull FloatingActionButton fabPublicar) {
+      @NonNull MaterialButton btnCatTodos, @NonNull MaterialButton btnEditarPublicacion,
+      @NonNull Chip chipAlumnos, @NonNull ChipGroup chipGroupFiltro,
+      @NonNull Chip chipPatrocinadores, @NonNull Chip chipTodos,
+      @NonNull TextInputEditText etBuscar, @NonNull FloatingActionButton fabPublicar,
+      @NonNull RecyclerView rvProducts, @NonNull LinearLayout sectionPromotores,
+      @NonNull TextView tvEmpty) {
     this.rootView = rootView;
-    this.backButtonBg = backButtonBg;
     this.btnBack = btnBack;
     this.btnBuscar = btnBuscar;
     this.btnCatAccesorios = btnCatAccesorios;
+    this.btnCatComida = btnCatComida;
     this.btnCatElectronicos = btnCatElectronicos;
     this.btnCatLibros = btnCatLibros;
     this.btnCatRopa = btnCatRopa;
+    this.btnCatTodos = btnCatTodos;
     this.btnEditarPublicacion = btnEditarPublicacion;
+    this.chipAlumnos = chipAlumnos;
+    this.chipGroupFiltro = chipGroupFiltro;
+    this.chipPatrocinadores = chipPatrocinadores;
+    this.chipTodos = chipTodos;
     this.etBuscar = etBuscar;
     this.fabPublicar = fabPublicar;
+    this.rvProducts = rvProducts;
+    this.sectionPromotores = sectionPromotores;
+    this.tvEmpty = tvEmpty;
   }
 
   @Override
@@ -98,12 +138,6 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.backButtonBg;
-      View backButtonBg = ViewBindings.findChildViewById(rootView, id);
-      if (backButtonBg == null) {
-        break missingId;
-      }
-
       id = R.id.btnBack;
       TextView btnBack = ViewBindings.findChildViewById(rootView, id);
       if (btnBack == null) {
@@ -119,6 +153,12 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
       id = R.id.btnCatAccesorios;
       MaterialButton btnCatAccesorios = ViewBindings.findChildViewById(rootView, id);
       if (btnCatAccesorios == null) {
+        break missingId;
+      }
+
+      id = R.id.btnCatComida;
+      MaterialButton btnCatComida = ViewBindings.findChildViewById(rootView, id);
+      if (btnCatComida == null) {
         break missingId;
       }
 
@@ -140,9 +180,39 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnCatTodos;
+      MaterialButton btnCatTodos = ViewBindings.findChildViewById(rootView, id);
+      if (btnCatTodos == null) {
+        break missingId;
+      }
+
       id = R.id.btnEditarPublicacion;
       MaterialButton btnEditarPublicacion = ViewBindings.findChildViewById(rootView, id);
       if (btnEditarPublicacion == null) {
+        break missingId;
+      }
+
+      id = R.id.chipAlumnos;
+      Chip chipAlumnos = ViewBindings.findChildViewById(rootView, id);
+      if (chipAlumnos == null) {
+        break missingId;
+      }
+
+      id = R.id.chipGroupFiltro;
+      ChipGroup chipGroupFiltro = ViewBindings.findChildViewById(rootView, id);
+      if (chipGroupFiltro == null) {
+        break missingId;
+      }
+
+      id = R.id.chipPatrocinadores;
+      Chip chipPatrocinadores = ViewBindings.findChildViewById(rootView, id);
+      if (chipPatrocinadores == null) {
+        break missingId;
+      }
+
+      id = R.id.chipTodos;
+      Chip chipTodos = ViewBindings.findChildViewById(rootView, id);
+      if (chipTodos == null) {
         break missingId;
       }
 
@@ -158,9 +228,28 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMarketplaceBinding((CoordinatorLayout) rootView, backButtonBg, btnBack,
-          btnBuscar, btnCatAccesorios, btnCatElectronicos, btnCatLibros, btnCatRopa,
-          btnEditarPublicacion, etBuscar, fabPublicar);
+      id = R.id.rvProducts;
+      RecyclerView rvProducts = ViewBindings.findChildViewById(rootView, id);
+      if (rvProducts == null) {
+        break missingId;
+      }
+
+      id = R.id.sectionPromotores;
+      LinearLayout sectionPromotores = ViewBindings.findChildViewById(rootView, id);
+      if (sectionPromotores == null) {
+        break missingId;
+      }
+
+      id = R.id.tvEmpty;
+      TextView tvEmpty = ViewBindings.findChildViewById(rootView, id);
+      if (tvEmpty == null) {
+        break missingId;
+      }
+
+      return new ActivityMarketplaceBinding((CoordinatorLayout) rootView, btnBack, btnBuscar,
+          btnCatAccesorios, btnCatComida, btnCatElectronicos, btnCatLibros, btnCatRopa, btnCatTodos,
+          btnEditarPublicacion, chipAlumnos, chipGroupFiltro, chipPatrocinadores, chipTodos,
+          etBuscar, fabPublicar, rvProducts, sectionPromotores, tvEmpty);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -1,0 +1,8 @@
+[
+  {
+    "id": 1,
+    "nombre": "Jesus",
+    "email": "a9099392125@uat.edu.mx",
+    "hashed_password": "$pbkdf2-sha256$29000$JsT4X0sJwdjbe2.NMUZoDQ$nW5g47msiwQZ1DOdDTKdjBpc4bGpEQf8vUChqM4waOo"
+  }
+]

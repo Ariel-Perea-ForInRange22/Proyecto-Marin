@@ -75,6 +75,18 @@
             android:exported="false"
             android:theme="@style/Theme.DevCore" />
 
+        <!-- Settings Activity -->
+        <activity
+            android:name="com.devcore.uat.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
+        <!-- Community Dashboard Activity -->
+        <activity
+            android:name="com.devcore.uat.CommunityDashboardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore" />
+
     </application>
 
 </manifest>

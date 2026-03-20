@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="🎓"
         android:textSize="60sp"
+        android:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="@id/logoBackground"
         app:layout_constraintEnd_toEndOf="@id/logoBackground"
         app:layout_constraintStart_toStartOf="@id/logoBackground"

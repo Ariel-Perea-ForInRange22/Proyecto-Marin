@@ -1,12 +1,12 @@
-from datetime import datetime, timedelta
+﻿from datetime import datetime, timedelta
 from typing import Optional
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 
-# Configuración de seguridad (TODO: mover a variables de entorno)
-SECRET_KEY = "super_secreto_key_para_desarrollo" # ¡Cambiar en producción!
+# Configuraci├│n de seguridad (TODO: mover a variables de entorno)
+SECRET_KEY = "super_secreto_key_para_desarrollo" # ┬íCambiar en producci├│n!
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7 # 7 días para "Recordarme"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7 # 7 d├¡as para "Recordarme"
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 

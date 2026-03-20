@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, DateTime
+from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, String, Float, DateTime
 from sqlalchemy.orm import relationship
 import datetime
 from .database import Base
@@ -9,20 +9,28 @@ class Usuario(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, index=True)
     email = Column(String, unique=True, index=True)
-    
-    # TODO: Implementar un hash real para contraseñas antes del release final
     hashed_password = Column(String)
     
+    es_staff = Column(Boolean, default=False)
     nivel_confianza = Column(Integer, default=0)
     racha_diaria = Column(Integer, default=0)
     ultima_conexion = Column(DateTime, default=datetime.datetime.utcnow)
 
-    # Relaciones (Comentadas por ahora para ir construyendo por partes)
-    # productos = relationship("Producto", back_populates="vendedor")
-    # reportes = relationship("Reporte", back_populates="autor")
-    # ubicaciones = relationship("UbicacionBus", back_populates="usuario")
+    # Campos de configuración de perfil extendida
+    correo_recuperacion = Column(String, nullable=True)
+    fecha_nacimiento = Column(Date, nullable=True)
+    semestre = Column(Integer, nullable=True)  # 1 a 9
+    grupo = Column(String, nullable=True)       # Ej: 'A', 'B', 'C'
+    huella_habilitada = Column(Boolean, default=False)
+
+    # Campos para el flujo de recuperación de contraseña
+    reset_token = Column(String, nullable=True)
+    reset_token_expiry = Column(DateTime, nullable=True)
+
+    # Relaciones
     comunidades = relationship("Comunidad", secondary="usuario_comunidad", back_populates="miembros")
     cursos = relationship("Curso", secondary="usuario_curso", back_populates="estudiantes")
+    publicaciones_comunidad = relationship("PublicacionComunidad", back_populates="autor")
 
 class Producto(Base):
     __tablename__ = "productos"
@@ -31,18 +39,21 @@ class Producto(Base):
     titulo = Column(String, index=True)
     descripcion = Column(String, index=True)
     precio = Column(Float)
-    
-    # FK a usuario vendedor
+    categoria = Column(String, default="otros")  # libros, electronicos, ropa, accesorios, comida, otros
+    imagen_url = Column(String, nullable=True)   # URL o emoji para muestra
+    es_patrocinado = Column(Boolean, default=False)  # True = promotor, False = alumno vendedor
+    fecha_publicacion = Column(DateTime, default=datetime.datetime.utcnow)
     vendedor_id = Column(Integer, ForeignKey("usuarios.id"))
 
-# Tabla intermedia para la relación de muchos-a-muchos entre Usuarios y Comunidades
+    vendedor = relationship("Usuario", foreign_keys=[vendedor_id])
+
 class UsuarioComunidad(Base):
     __tablename__ = "usuario_comunidad"
     usuario_id = Column(Integer, ForeignKey("usuarios.id"), primary_key=True)
     comunidad_id = Column(Integer, ForeignKey("comunidades.id"), primary_key=True)
+    rol = Column(String, default="MIEMBRO")
     fecha_union = Column(DateTime, default=datetime.datetime.utcnow)
 
-# Tabla intermedia para la relación de muchos-a-muchos entre Usuarios y Cursos
 class UsuarioCurso(Base):
     __tablename__ = "usuario_curso"
     usuario_id = Column(Integer, ForeignKey("usuarios.id"), primary_key=True)
@@ -57,19 +68,30 @@ class Comunidad(Base):
     descripcion = Column(String)
     fecha_creacion = Column(DateTime, default=datetime.datetime.utcnow)
     
-    # Usuarios miembros de esta comunidad
     miembros = relationship("Usuario", secondary="usuario_comunidad", back_populates="comunidades")
+    publicaciones = relationship("PublicacionComunidad", back_populates="comunidad")
+
+class PublicacionComunidad(Base):
+    __tablename__ = "publicaciones_comunidad"
+
+    id = Column(Integer, primary_key=True, index=True)
+    comunidad_id = Column(Integer, ForeignKey("comunidades.id"))
+    autor_id = Column(Integer, ForeignKey("usuarios.id"))
+    contenido = Column(String)
+    fecha_creacion = Column(DateTime, default=datetime.datetime.utcnow)
+    likes_count = Column(Integer, default=0)
+    estado = Column(String, default="PENDIENTE")
+    es_oficial = Column(Boolean, default=False)
+
+    comunidad = relationship("Comunidad", back_populates="publicaciones")
+    autor = relationship("Usuario", back_populates="publicaciones_comunidad")
 
 class Curso(Base):
     __tablename__ = "cursos"
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, index=True)
-    codigo = Column(String, unique=True, index=True) # Ejemplo: MAT-101
+    codigo = Column(String, unique=True, index=True)
     creditos = Column(Integer)
     
-    # Estudiantes inscritos en este curso
     estudiantes = relationship("Usuario", secondary="usuario_curso", back_populates="cursos")
-
-# Se agregan al final las relaciones inversas para la clase Usuario (se deben agregar a Usuario también, 
-# pero SQLAlchemy permite inyectarlas dinámicamente o definirlas allí. Las pondremos en Usuario).

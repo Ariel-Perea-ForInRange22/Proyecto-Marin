@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b1e4fc47-e2f9-48b9-b0aa-08901869ef1e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/kotlin/CHECKLIST_VALIDACION.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/INDICE_DOCUMENTACION.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/README_ANDROID.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/REFERENCIA_CODIGO.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/RESUMEN_MIGRACION.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/WIREFRAMES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/BusTrackingActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/HomeActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/LoginActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/MarketplaceActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/PendingActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/ProfileActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/RegisterActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/java/com/devcore/SplashActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/drawable/bg_back_button.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/drawable/bg_circle_gradient.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/drawable/bg_circle_white.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/drawable/bg_file_upload.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/drawable/gradient_header.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/drawable/gradient_splash.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/layout/activity_home.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/layout/activity_pending.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/layout/activity_register.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/layout/activity_splash.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/layout/bottom_navigation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bus-tracking.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/marketplace.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pending.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/jesus/OneDrive - Universidad Autónoma de Tamaulipas/Documentos/Proyecto-Marin" value="3AlYNFZdmGWhkFU27xoJnVCQ2SA" />
+    </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="chat-panel" value="Claude Sonnet 4.5" />
+      <entry key="agent-panel" value="Claude Sonnet 4.5" />
+    </selectedModels>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3AlYNFZdmGWhkFU27xoJnVCQ2SA" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/jesus/OneDrive - Universidad Autónoma de Tamaulipas/Documentos/Proyecto-Marin",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b1e4fc47-e2f9-48b9-b0aa-08901869ef1e" name="Changes" comment="" />
+      <created>1773168584276</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1773168584276</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

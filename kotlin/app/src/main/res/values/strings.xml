@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DevCore</string>
+    <string name="profile_progress_points">%1$d de 100 puntos</string>
+    <string name="profile_streak_days">%1$d días</string>
 </resources>
-

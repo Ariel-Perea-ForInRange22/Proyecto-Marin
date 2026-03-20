@@ -35,6 +35,8 @@
     <dimen name="text_size_xlarge">24sp</dimen>
     <dimen name="text_size_xxlarge">32sp</dimen>
     <string name="app_name">DevCore</string>
+    <string name="profile_progress_points">%1$d de 100 puntos</string>
+    <string name="profile_streak_days">%1$d días</string>
     <style name="DevCoreButton" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">8dp</item>
         <item name="android:paddingTop">15dp</item>

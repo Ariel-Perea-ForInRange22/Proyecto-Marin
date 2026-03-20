@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.devcore.uat.data.SessionManager
 import com.devcore.uat.databinding.ActivityProfileBinding
@@ -36,7 +37,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.btnLogout.setOnClickListener { confirmLogout() }
 
         binding.btnSettings.setOnClickListener {
-            Toast.makeText(this, "Configuración - Próximamente", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         // Bottom Navigation
@@ -63,7 +64,9 @@ class ProfileActivity : AppCompatActivity() {
             val token = sessionManager.authTokenFlow.firstOrNull()
 
             if (token == null) {
-                goToSplash()
+                if (shouldHandleSessionExpiry()) {
+                    goToSplash()
+                }
                 return@launch
             }
 
@@ -84,7 +87,7 @@ class ProfileActivity : AppCompatActivity() {
                     // --- Nivel de confianza ---
                     binding.tvNivelConfianza.text = nivel.toString()
                     binding.progressConfianza.progress = nivel
-                    binding.tvProgressLabel.text = "$nivel de 100 puntos"
+                    binding.tvProgressLabel.text = getString(R.string.profile_progress_points, nivel)
 
                     // Stats de reportes (por ahora estimados a partir del nivel)
                     val verificados = (nivel * 0.55).toInt()
@@ -97,22 +100,29 @@ class ProfileActivity : AppCompatActivity() {
                     binding.tvTasaPrecision.text = precision
 
                     // --- Rachas ---
-                    binding.tvRachaDias.text = "$racha días"
+                    binding.tvRachaDias.text = getString(R.string.profile_streak_days, racha)
                     updateStreakBars(racha)
 
                 } else if (response.code() == 401) {
-                    sessionManager.clearSession()
-                    Toast.makeText(this@ProfileActivity, "Sesión expirada", Toast.LENGTH_SHORT).show()
-                    goToSplash()
+                    // Evita logout/redirección tardía si el usuario ya salió de Perfil.
+                    if (shouldHandleSessionExpiry()) {
+                        sessionManager.clearSession()
+                        Toast.makeText(this@ProfileActivity, "Sesión expirada", Toast.LENGTH_SHORT).show()
+                        goToSplash()
+                    }
                 } else {
                     Toast.makeText(this@ProfileActivity, "No se pudo cargar el perfil", Toast.LENGTH_SHORT).show()
                     loadLocalFallback()
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 Toast.makeText(this@ProfileActivity, "Sin conexión al servidor", Toast.LENGTH_SHORT).show()
                 loadLocalFallback()
             }
         }
+    }
+
+    private fun shouldHandleSessionExpiry(): Boolean {
+        return !isFinishing && !isDestroyed && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     }
 
     private suspend fun loadLocalFallback() {

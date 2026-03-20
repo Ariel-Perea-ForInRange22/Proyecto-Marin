@@ -5,11 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.devcore.uat.R;
@@ -21,13 +22,16 @@ import java.lang.String;
 
 public final class ActivityLoginBinding implements ViewBinding {
   @NonNull
-  private final CoordinatorLayout rootView;
+  private final LinearLayout rootView;
 
   @NonNull
   public final View backButtonBg;
 
   @NonNull
   public final TextView btnBack;
+
+  @NonNull
+  public final ImageView btnBiometric;
 
   @NonNull
   public final MaterialButton btnLoginSubmit;
@@ -53,15 +57,16 @@ public final class ActivityLoginBinding implements ViewBinding {
   @NonNull
   public final TextView tvForgotPassword;
 
-  private ActivityLoginBinding(@NonNull CoordinatorLayout rootView, @NonNull View backButtonBg,
-      @NonNull TextView btnBack, @NonNull MaterialButton btnLoginSubmit,
-      @NonNull MaterialButton btnRegister, @NonNull CheckBox cbRemember,
-      @NonNull TextInputEditText etEmail, @NonNull TextInputEditText etPassword,
-      @NonNull RelativeLayout header, @NonNull View logoGradient,
-      @NonNull TextView tvForgotPassword) {
+  private ActivityLoginBinding(@NonNull LinearLayout rootView, @NonNull View backButtonBg,
+      @NonNull TextView btnBack, @NonNull ImageView btnBiometric,
+      @NonNull MaterialButton btnLoginSubmit, @NonNull MaterialButton btnRegister,
+      @NonNull CheckBox cbRemember, @NonNull TextInputEditText etEmail,
+      @NonNull TextInputEditText etPassword, @NonNull RelativeLayout header,
+      @NonNull View logoGradient, @NonNull TextView tvForgotPassword) {
     this.rootView = rootView;
     this.backButtonBg = backButtonBg;
     this.btnBack = btnBack;
+    this.btnBiometric = btnBiometric;
     this.btnLoginSubmit = btnLoginSubmit;
     this.btnRegister = btnRegister;
     this.cbRemember = cbRemember;
@@ -74,7 +79,7 @@ public final class ActivityLoginBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public CoordinatorLayout getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -108,6 +113,12 @@ public final class ActivityLoginBinding implements ViewBinding {
       id = R.id.btnBack;
       TextView btnBack = ViewBindings.findChildViewById(rootView, id);
       if (btnBack == null) {
+        break missingId;
+      }
+
+      id = R.id.btnBiometric;
+      ImageView btnBiometric = ViewBindings.findChildViewById(rootView, id);
+      if (btnBiometric == null) {
         break missingId;
       }
 
@@ -159,7 +170,7 @@ public final class ActivityLoginBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityLoginBinding((CoordinatorLayout) rootView, backButtonBg, btnBack,
+      return new ActivityLoginBinding((LinearLayout) rootView, backButtonBg, btnBack, btnBiometric,
           btnLoginSubmit, btnRegister, cbRemember, etEmail, etPassword, header, logoGradient,
           tvForgotPassword);
     }
