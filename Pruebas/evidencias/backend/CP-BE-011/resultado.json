@@ -1,0 +1,26 @@
+{
+  "id": "CP-BE-011",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "GET",
+    "url": "/usuarios/buscar?q=Prueba"
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      {
+        "id": 22,
+        "nombre": "Usuario Prueba Normal",
+        "email": "prueba.normal.20260414180049@uat.edu.mx",
+        "es_staff": false
+      },
+      {
+        "id": 23,
+        "nombre": "Usuario Prueba Staff",
+        "email": "prueba.staff.20260414180049@uat.edu.mx",
+        "es_staff": true
+      }
+    ]
+  },
+  "pass": true
+}

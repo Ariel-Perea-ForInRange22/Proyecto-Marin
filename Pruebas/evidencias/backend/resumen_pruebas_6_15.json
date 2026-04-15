@@ -1,0 +1,53 @@
+[
+  {
+    "id": "CP-BE-006",
+    "status": 200,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-007",
+    "status": 401,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-008",
+    "status": 200,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-009",
+    "status": 400,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-010",
+    "status": 200,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-011",
+    "status": 200,
+    "pass": true,
+    "count": 2
+  },
+  {
+    "id": "CP-BE-012",
+    "status": 200,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-013",
+    "status": 200,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-014",
+    "status": 200,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-015",
+    "status": 404,
+    "pass": true
+  }
+]

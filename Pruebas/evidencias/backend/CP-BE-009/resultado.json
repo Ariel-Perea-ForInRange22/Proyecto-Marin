@@ -1,0 +1,18 @@
+{
+  "id": "CP-BE-009",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "PATCH",
+    "url": "/usuarios/me",
+    "body": {
+      "semestre": 15
+    }
+  },
+  "response": {
+    "status": 400,
+    "body": {
+      "detail": "El semestre debe estar entre 1 y 9"
+    }
+  },
+  "pass": true
+}

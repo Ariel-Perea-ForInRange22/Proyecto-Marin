@@ -1,0 +1,16 @@
+{
+  "id": "CP-BE-007",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "GET",
+    "url": "/usuarios/me",
+    "headers": "Authorization Bearer (invalid token)"
+  },
+  "response": {
+    "status": 401,
+    "body": {
+      "detail": "Could not validate credentials"
+    }
+  },
+  "pass": true
+}

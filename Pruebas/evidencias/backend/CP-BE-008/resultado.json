@@ -1,0 +1,33 @@
+{
+  "id": "CP-BE-008",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "PATCH",
+    "url": "/usuarios/me",
+    "body": {
+      "correo_recuperacion": "recuperacion.backend.prueba@gmail.com",
+      "fecha_nacimiento": "2002-06-15",
+      "semestre": 6,
+      "grupo": "A",
+      "huella_habilitada": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "nombre": "Usuario Prueba Normal",
+      "email": "prueba.normal.20260414180049@uat.edu.mx",
+      "id": 22,
+      "es_staff": false,
+      "nivel_confianza": 0,
+      "racha_diaria": 0,
+      "ultima_conexion": "2026-04-15T00:00:49.541746",
+      "correo_recuperacion": "recuperacion.backend.prueba@gmail.com",
+      "fecha_nacimiento": "2002-06-15",
+      "semestre": 6,
+      "grupo": "A",
+      "huella_habilitada": true
+    }
+  },
+  "pass": true
+}

@@ -1,0 +1,13 @@
+{
+  "id": "CP-BE-010",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "GET",
+    "url": "/usuarios/buscar?q=a"
+  },
+  "response": {
+    "status": 200,
+    "body": []
+  },
+  "pass": true
+}

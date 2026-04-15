@@ -1,0 +1,27 @@
+{
+  "id": "CP-BE-006",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "GET",
+    "url": "/usuarios/me",
+    "headers": "Authorization Bearer"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "nombre": "Usuario Prueba Normal",
+      "email": "prueba.normal.20260414180049@uat.edu.mx",
+      "id": 22,
+      "es_staff": false,
+      "nivel_confianza": 0,
+      "racha_diaria": 0,
+      "ultima_conexion": "2026-04-15T00:00:49.541746",
+      "correo_recuperacion": null,
+      "fecha_nacimiento": null,
+      "semestre": null,
+      "grupo": null,
+      "huella_habilitada": false
+    }
+  },
+  "pass": true
+}

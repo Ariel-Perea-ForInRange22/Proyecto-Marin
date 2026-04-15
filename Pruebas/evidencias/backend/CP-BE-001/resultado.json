@@ -1,0 +1,16 @@
+{
+  "id": "CP-BE-001",
+  "fecha": "2026-03-19 09:18:07",
+  "request": {
+    "method": "GET",
+    "url": "/"
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "En desarrollo",
+      "message": "API de la Comunidad Universitaria funcionando."
+    }
+  },
+  "pass": true
+}

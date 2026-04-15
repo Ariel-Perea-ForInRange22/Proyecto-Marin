@@ -1,0 +1,71 @@
+{
+  "id": "CP-BE-012",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "normal": {
+      "method": "GET",
+      "url": "/comunidades/1/pendientes"
+    },
+    "staff": {
+      "method": "GET",
+      "url": "/comunidades/1/pendientes"
+    },
+    "pending_created": {
+      "method": "POST",
+      "url": "/comunidades/1/publicaciones",
+      "body": {
+        "contenido": "Publicacion de prueba pendiente 2026-04-14 18:01:34",
+        "es_oficial": false
+      }
+    }
+  },
+  "response": {
+    "normal": {
+      "status": 403,
+      "body": {
+        "detail": "No tienes permisos para moderar"
+      }
+    },
+    "staff": {
+      "status": 200,
+      "body": [
+        {
+          "contenido": "Publicacion de prueba pendiente 2026-04-14 18:01:34",
+          "es_oficial": false,
+          "id": 1,
+          "comunidad_id": 1,
+          "autor_id": 22,
+          "fecha_creacion": "2026-04-15T00:01:34.666185",
+          "likes_count": 0,
+          "estado": "PENDIENTE",
+          "autor": {
+            "id": 22,
+            "nombre": "Usuario Prueba Normal",
+            "email": "prueba.normal.20260414180049@uat.edu.mx",
+            "es_staff": false
+          }
+        }
+      ]
+    },
+    "pending_created": {
+      "status": 200,
+      "body": {
+        "contenido": "Publicacion de prueba pendiente 2026-04-14 18:01:34",
+        "es_oficial": false,
+        "id": 1,
+        "comunidad_id": 1,
+        "autor_id": 22,
+        "fecha_creacion": "2026-04-15T00:01:34.666185",
+        "likes_count": 0,
+        "estado": "PENDIENTE",
+        "autor": {
+          "id": 22,
+          "nombre": "Usuario Prueba Normal",
+          "email": "prueba.normal.20260414180049@uat.edu.mx",
+          "es_staff": false
+        }
+      }
+    }
+  },
+  "pass": true
+}

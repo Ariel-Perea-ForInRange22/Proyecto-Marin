@@ -1,0 +1,32 @@
+{
+  "id": "CP-BE-013",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "POST",
+    "url": "/comunidades/1/publicaciones",
+    "body": {
+      "contenido": "Publicacion normal de prueba 2026-04-14 18:01:34",
+      "es_oficial": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "contenido": "Publicacion normal de prueba 2026-04-14 18:01:34",
+      "es_oficial": false,
+      "id": 2,
+      "comunidad_id": 1,
+      "autor_id": 22,
+      "fecha_creacion": "2026-04-15T00:01:34.922137",
+      "likes_count": 0,
+      "estado": "PENDIENTE",
+      "autor": {
+        "id": 22,
+        "nombre": "Usuario Prueba Normal",
+        "email": "prueba.normal.20260414180049@uat.edu.mx",
+        "es_staff": false
+      }
+    }
+  },
+  "pass": true
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "CP-BE-001",
+    "status": 200,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-002",
+    "status": 200,
+    "pass": true,
+    "email": "prueba.20260319091807@uat.edu.mx"
+  },
+  {
+    "id": "CP-BE-003",
+    "status": 400,
+    "pass": true
+  },
+  {
+    "id": "CP-BE-004",
+    "status": 200,
+    "pass": true,
+    "email": "prueba.20260319091807@uat.edu.mx"
+  },
+  {
+    "id": "CP-BE-005",
+    "status": 401,
+    "pass": true,
+    "email": "prueba.20260319091807@uat.edu.mx"
+  }
+]

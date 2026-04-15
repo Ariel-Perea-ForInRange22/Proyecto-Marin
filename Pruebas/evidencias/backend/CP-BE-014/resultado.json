@@ -1,0 +1,32 @@
+{
+  "id": "CP-BE-014",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "POST",
+    "url": "/comunidades/1/publicaciones",
+    "body": {
+      "contenido": "Publicacion staff de prueba 2026-04-14 18:01:34",
+      "es_oficial": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "contenido": "Publicacion staff de prueba 2026-04-14 18:01:34",
+      "es_oficial": true,
+      "id": 3,
+      "comunidad_id": 1,
+      "autor_id": 23,
+      "fecha_creacion": "2026-04-15T00:01:35.105497",
+      "likes_count": 0,
+      "estado": "APROBADA",
+      "autor": {
+        "id": 23,
+        "nombre": "Usuario Prueba Staff",
+        "email": "prueba.staff.20260414180049@uat.edu.mx",
+        "es_staff": true
+      }
+    }
+  },
+  "pass": true
+}

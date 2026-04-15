@@ -1,0 +1,31 @@
+{
+  "id": "CP-BE-002",
+  "fecha": "2026-03-19 09:18:07",
+  "request": {
+    "method": "POST",
+    "url": "/usuarios/",
+    "body": {
+      "nombre": "Usuario Prueba 20260319091807",
+      "email": "prueba.20260319091807@uat.edu.mx",
+      "password": "Prueba123!"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "nombre": "Usuario Prueba 20260319091807",
+      "email": "prueba.20260319091807@uat.edu.mx",
+      "id": 1,
+      "es_staff": false,
+      "nivel_confianza": 0,
+      "racha_diaria": 0,
+      "ultima_conexion": "2026-03-19T15:18:07.408400",
+      "correo_recuperacion": null,
+      "fecha_nacimiento": null,
+      "semestre": null,
+      "grupo": null,
+      "huella_habilitada": false
+    }
+  },
+  "pass": true
+}

@@ -1,0 +1,15 @@
+{
+  "id": "CP-BE-015",
+  "fecha": "2026-04-14 18:01:34",
+  "request": {
+    "method": "GET",
+    "url": "/usuarios/99999"
+  },
+  "response": {
+    "status": 404,
+    "body": {
+      "detail": "Usuario no encontrado"
+    }
+  },
+  "pass": true
+}
