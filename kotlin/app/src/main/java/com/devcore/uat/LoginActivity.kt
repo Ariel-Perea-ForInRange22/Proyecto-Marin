@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.tvForgotPassword.setOnClickListener {
-            Toast.makeText(this, "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RecoveryActivity::class.java))
         }
 
         binding.btnLoginSubmit.setOnClickListener {

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -40,6 +41,7 @@ class SettingsActivity : AppCompatActivity() {
         setupBiometricSwitch()
         setupClickListeners()
         loadCurrentSettings()
+        loadCodesStatus()
     }
 
     // ─────────────────────────────────────────────
@@ -90,6 +92,8 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnFechaNacimiento.setOnClickListener { showDatePicker() }
 
         binding.btnGuardar.setOnClickListener { saveSettings() }
+
+        binding.btnGenerarCodigos.setOnClickListener { generateBackupCodes() }
 
         // Intercept switch: si se activa, verificar con biometría primero
         binding.switchHuella.setOnCheckedChangeListener { _, isChecked ->
@@ -199,6 +203,11 @@ class SettingsActivity : AppCompatActivity() {
                         binding.etCorreoRecuperacion.setText(it)
                     }
 
+                    // Teléfono de recuperación
+                    user.telefono_recuperacion?.let {
+                        binding.etTelefonoRecuperacion.setText(it)
+                    }
+
                     // Fecha de nacimiento
                     user.fecha_nacimiento?.let { isoDate ->
                         selectedDateIso = isoDate
@@ -239,11 +248,109 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     // ─────────────────────────────────────────────
+    //  Cargar estado de códigos de respaldo
+    // ─────────────────────────────────────────────
+
+    private fun loadCodesStatus() {
+        lifecycleScope.launch {
+            val token = sessionManager.authTokenFlow.firstOrNull() ?: return@launch
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.apiService.estadoCodigosRespaldo("Bearer $token")
+                }
+                if (response.isSuccessful && response.body() != null) {
+                    val status = response.body()!!
+                    withContext(Dispatchers.Main) {
+                        if (status.total == 0) {
+                            binding.tvCodesStatus.text = "⚠️ Sin códigos generados"
+                            binding.tvCodesStatus.setTextColor(getColor(R.color.rojo_pastel))
+                        } else {
+                            binding.tvCodesStatus.text = "🔑 ${status.disponibles} de ${status.total} códigos disponibles"
+                            val color = if (status.disponibles <= 2) getColor(R.color.rojo_pastel)
+                                        else getColor(R.color.verde_pastel)
+                            binding.tvCodesStatus.setTextColor(color)
+                        }
+                    }
+                }
+            } catch (_: Exception) {
+                // Silencioso: si no hay conexión, dejamos el texto por defecto
+            }
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    //  Generar códigos de respaldo
+    // ─────────────────────────────────────────────
+
+    private fun generateBackupCodes() {
+        AlertDialog.Builder(this)
+            .setTitle("⚠️ Generar nuevos códigos")
+            .setMessage("Esto reemplazará cualquier código anterior. Los nuevos códigos se mostrarán UNA SOLA VEZ.\n\n¿Deseas continuar?")
+            .setPositiveButton("Generar") { _, _ -> doGenerateCodes() }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun doGenerateCodes() {
+        binding.btnGenerarCodigos.isEnabled = false
+        binding.btnGenerarCodigos.text = "Generando..."
+
+        lifecycleScope.launch {
+            val token = sessionManager.authTokenFlow.firstOrNull()
+            if (token == null) {
+                Toast.makeText(this@SettingsActivity, "Sesión expirada", Toast.LENGTH_SHORT).show()
+                binding.btnGenerarCodigos.isEnabled = true
+                binding.btnGenerarCodigos.text = "🔑  Generar Códigos de Respaldo"
+                return@launch
+            }
+
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.apiService.generarCodigosRespaldo("Bearer $token")
+                }
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val body = response.body()!!
+                        showCodesDialog(body.codigos)
+                        loadCodesStatus() // Actualizar contador
+                    } else {
+                        Toast.makeText(this@SettingsActivity, "Error al generar códigos", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@SettingsActivity, "Error de red: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            } finally {
+                withContext(Dispatchers.Main) {
+                    binding.btnGenerarCodigos.isEnabled = true
+                    binding.btnGenerarCodigos.text = "🔑  Generar Códigos de Respaldo"
+                }
+            }
+        }
+    }
+
+    private fun showCodesDialog(codes: List<String>) {
+        val codesText = codes.mapIndexed { index, code ->
+            "${index + 1}.  $code"
+        }.joinToString("\n")
+
+        AlertDialog.Builder(this)
+            .setTitle("🔑 Tus Códigos de Respaldo")
+            .setMessage("Guárdalos en un lugar seguro. NO se mostrarán de nuevo.\n\n$codesText")
+            .setPositiveButton("Ya los guardé") { _, _ -> }
+            .setCancelable(false)
+            .show()
+    }
+
+    // ─────────────────────────────────────────────
     //  Guardar cambios vía PATCH /usuarios/me
     // ─────────────────────────────────────────────
 
     private fun saveSettings() {
         val correo = binding.etCorreoRecuperacion.text?.toString()?.trim()
+        val telefono = binding.etTelefonoRecuperacion.text?.toString()?.trim()
         val grupo = binding.etGrupo.text?.toString()?.trim()?.uppercase()
         val semestreIndex = binding.spinnerSemestre.selectedItemPosition
         val semestre = if (semestreIndex > 0) semestreIndex else null
@@ -252,6 +359,12 @@ class SettingsActivity : AppCompatActivity() {
         // Validación básica de correo de recuperación
         if (!correo.isNullOrEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
             Toast.makeText(this, "El correo de recuperación no es válido", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Validación de teléfono
+        if (!telefono.isNullOrEmpty() && telefono.length != 10) {
+            Toast.makeText(this, "El teléfono debe tener 10 dígitos", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -270,6 +383,7 @@ class SettingsActivity : AppCompatActivity() {
             try {
                 val payload = UsuarioUpdateRequest(
                     correo_recuperacion = correo?.ifEmpty { null },
+                    telefono_recuperacion = telefono?.ifEmpty { null },
                     fecha_nacimiento = selectedDateIso,
                     semestre = semestre,
                     grupo = grupo?.ifEmpty { null },

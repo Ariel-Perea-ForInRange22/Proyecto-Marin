@@ -1,66 +1,90 @@
 [
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_comunidades.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_comunidades.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_profile.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_profile.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_user_search.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_user_search.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/item_usuario_search.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/item_usuario_search.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/bottom_navigation.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/bottom_navigation.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_recovery.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_recovery.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_user_profile_posts.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_user_profile_posts.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_product_detail.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_product_detail.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_profile.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_profile.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_marketplace.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_marketplace.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_register.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_register.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_comunidad_mural.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_comunidad_mural.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_splash.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_splash.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/item_publicacion.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/item_publicacion.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/item_usuario_search.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/item_usuario_search.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_reset_password.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_reset_password.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_login.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_login.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/bottom_navigation.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/bottom_navigation.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_pending.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_pending.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_splash.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_splash.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_comunidad_mural.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_comunidad_mural.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_user_search.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_user_search.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_bus_tracking.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_bus_tracking.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_user_profile_posts.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_user_profile_posts.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_marketplace.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_marketplace.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_comunidades.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_comunidades.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/item_publicacion.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/item_publicacion.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_bus_tracking.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_bus_tracking.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_home.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_home.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_register.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_register.xml"
     },
     {
-        "merged": "com.devcore.uat.app-mergeDebugResources-68:/layout/activity_settings.xml",
-        "source": "com.devcore.uat.app-main-71:/layout/activity_settings.xml"
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_create_product.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_create_product.xml"
+    },
+    {
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_pending.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_pending.xml"
+    },
+    {
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/item_producto.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/item_producto.xml"
+    },
+    {
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_home.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_home.xml"
+    },
+    {
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_login.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/activity_settings.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.devcore.uat.app-mergeDebugResources-3:/layout/dialog_nuevo_producto.xml",
+        "source": "com.devcore.uat.app-main-6:/layout/dialog_nuevo_producto.xml"
     }
 ]

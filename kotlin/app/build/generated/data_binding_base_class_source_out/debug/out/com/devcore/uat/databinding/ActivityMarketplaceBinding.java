@@ -4,10 +4,13 @@ package com.devcore.uat.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.devcore.uat.R;
@@ -44,7 +47,7 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
   public final MaterialButton btnCatRopa;
 
   @NonNull
-  public final MaterialButton btnEditarPublicacion;
+  public final MaterialButton btnCatTodos;
 
   @NonNull
   public final TextInputEditText etBuscar;
@@ -52,12 +55,33 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
   @NonNull
   public final FloatingActionButton fabPublicar;
 
+  @NonNull
+  public final LinearLayout layoutEmpty;
+
+  @NonNull
+  public final ProgressBar progressBar;
+
+  @NonNull
+  public final RecyclerView rvMisProductos;
+
+  @NonNull
+  public final RecyclerView rvProductos;
+
+  @NonNull
+  public final TextView tvMisProductosHeader;
+
+  @NonNull
+  public final TextView tvResultsCount;
+
   private ActivityMarketplaceBinding(@NonNull CoordinatorLayout rootView,
       @NonNull View backButtonBg, @NonNull TextView btnBack, @NonNull MaterialButton btnBuscar,
       @NonNull MaterialButton btnCatAccesorios, @NonNull MaterialButton btnCatElectronicos,
       @NonNull MaterialButton btnCatLibros, @NonNull MaterialButton btnCatRopa,
-      @NonNull MaterialButton btnEditarPublicacion, @NonNull TextInputEditText etBuscar,
-      @NonNull FloatingActionButton fabPublicar) {
+      @NonNull MaterialButton btnCatTodos, @NonNull TextInputEditText etBuscar,
+      @NonNull FloatingActionButton fabPublicar, @NonNull LinearLayout layoutEmpty,
+      @NonNull ProgressBar progressBar, @NonNull RecyclerView rvMisProductos,
+      @NonNull RecyclerView rvProductos, @NonNull TextView tvMisProductosHeader,
+      @NonNull TextView tvResultsCount) {
     this.rootView = rootView;
     this.backButtonBg = backButtonBg;
     this.btnBack = btnBack;
@@ -66,9 +90,15 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
     this.btnCatElectronicos = btnCatElectronicos;
     this.btnCatLibros = btnCatLibros;
     this.btnCatRopa = btnCatRopa;
-    this.btnEditarPublicacion = btnEditarPublicacion;
+    this.btnCatTodos = btnCatTodos;
     this.etBuscar = etBuscar;
     this.fabPublicar = fabPublicar;
+    this.layoutEmpty = layoutEmpty;
+    this.progressBar = progressBar;
+    this.rvMisProductos = rvMisProductos;
+    this.rvProductos = rvProductos;
+    this.tvMisProductosHeader = tvMisProductosHeader;
+    this.tvResultsCount = tvResultsCount;
   }
 
   @Override
@@ -140,9 +170,9 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnEditarPublicacion;
-      MaterialButton btnEditarPublicacion = ViewBindings.findChildViewById(rootView, id);
-      if (btnEditarPublicacion == null) {
+      id = R.id.btnCatTodos;
+      MaterialButton btnCatTodos = ViewBindings.findChildViewById(rootView, id);
+      if (btnCatTodos == null) {
         break missingId;
       }
 
@@ -158,9 +188,46 @@ public final class ActivityMarketplaceBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.layoutEmpty;
+      LinearLayout layoutEmpty = ViewBindings.findChildViewById(rootView, id);
+      if (layoutEmpty == null) {
+        break missingId;
+      }
+
+      id = R.id.progressBar;
+      ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
+      if (progressBar == null) {
+        break missingId;
+      }
+
+      id = R.id.rvMisProductos;
+      RecyclerView rvMisProductos = ViewBindings.findChildViewById(rootView, id);
+      if (rvMisProductos == null) {
+        break missingId;
+      }
+
+      id = R.id.rvProductos;
+      RecyclerView rvProductos = ViewBindings.findChildViewById(rootView, id);
+      if (rvProductos == null) {
+        break missingId;
+      }
+
+      id = R.id.tvMisProductosHeader;
+      TextView tvMisProductosHeader = ViewBindings.findChildViewById(rootView, id);
+      if (tvMisProductosHeader == null) {
+        break missingId;
+      }
+
+      id = R.id.tvResultsCount;
+      TextView tvResultsCount = ViewBindings.findChildViewById(rootView, id);
+      if (tvResultsCount == null) {
+        break missingId;
+      }
+
       return new ActivityMarketplaceBinding((CoordinatorLayout) rootView, backButtonBg, btnBack,
-          btnBuscar, btnCatAccesorios, btnCatElectronicos, btnCatLibros, btnCatRopa,
-          btnEditarPublicacion, etBuscar, fabPublicar);
+          btnBuscar, btnCatAccesorios, btnCatElectronicos, btnCatLibros, btnCatRopa, btnCatTodos,
+          etBuscar, fabPublicar, layoutEmpty, progressBar, rvMisProductos, rvProductos,
+          tvMisProductosHeader, tvResultsCount);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

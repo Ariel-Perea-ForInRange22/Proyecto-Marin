@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime, date
 
 # --- AUTH (TOKENS) ---
@@ -25,6 +25,7 @@ class Usuario(UsuarioBase):
     racha_diaria: int
     ultima_conexion: datetime
     correo_recuperacion: Optional[str] = None
+    telefono_recuperacion: Optional[str] = None
     fecha_nacimiento: Optional[date] = None
     semestre: Optional[int] = None
     grupo: Optional[str] = None
@@ -36,6 +37,7 @@ class Usuario(UsuarioBase):
 # --- ACTUALIZACIÓN DE PERFIL (PATCH) ---
 class UsuarioUpdate(BaseModel):
     correo_recuperacion: Optional[EmailStr] = None
+    telefono_recuperacion: Optional[str] = None
     fecha_nacimiento: Optional[date] = None
     semestre: Optional[int] = None
     grupo: Optional[str] = None
@@ -46,18 +48,39 @@ class ProductoBase(BaseModel):
     titulo: str
     descripcion: Optional[str] = None
     precio: float
+    categoria: str  # libros, electronicos, ropa, accesorios, otros
+    condicion: str = "usado"  # nuevo, como_nuevo, usado
 
 class ProductoCreate(ProductoBase):
     pass
 
+class ProductoUpdate(BaseModel):
+    titulo: Optional[str] = None
+    descripcion: Optional[str] = None
+    precio: Optional[float] = None
+    categoria: Optional[str] = None
+    condicion: Optional[str] = None
+    estado: Optional[str] = None  # activo, vendido, pausado
+
+class ProductoVendedor(BaseModel):
+    id: int
+    nombre: str
+    email: str
+    class Config:
+        from_attributes = True
+
 class Producto(ProductoBase):
     id: int
     vendedor_id: int
+    estado: str = "activo"
+    imagen_url: Optional[str] = None
+    fecha_creacion: Optional[datetime] = None
+    vendedor: Optional[ProductoVendedor] = None
 
     class Config:
         from_attributes = True
 
-# TODO: Integrar schemas de reportes y ubicaciones cuando los modelos estén listos
+# TODO: Integrar schemas de reportes y ubicaciones cuando los modelos esten listos
 
 # --- COMUNIDADES ---
 class ComunidadBase(BaseModel):
@@ -108,3 +131,41 @@ class PublicacionComunidad(PublicacionComunidadBase):
 
     class Config:
         from_attributes = True
+
+# --- RECUPERACIÓN DE CUENTA ---
+
+class RecoveryCodesResponse(BaseModel):
+    """Respuesta al generar códigos de respaldo (se muestran una sola vez)"""
+    codigos: List[str]
+    mensaje: str
+    total: int
+
+class RecoveryCodesStatus(BaseModel):
+    """Cuántos códigos quedan disponibles"""
+    total: int
+    disponibles: int
+
+class RecoveryRequestEmail(BaseModel):
+    """Solicitar código de recuperación por correo secundario"""
+    email: EmailStr  # correo institucional del usuario
+
+class RecoveryVerifyEmail(BaseModel):
+    """Verificar código de 6 dígitos enviado al correo secundario"""
+    email: EmailStr
+    codigo: str
+
+class RecoveryVerifyBackup(BaseModel):
+    """Verificar código de respaldo"""
+    email: EmailStr
+    codigo: str
+
+class ResetPasswordRequest(BaseModel):
+    """Restablecer contraseña con token temporal"""
+    reset_token: str
+    nueva_password: str
+
+class ResetTokenResponse(BaseModel):
+    """Token temporal para restablecer contraseña"""
+    reset_token: str
+    mensaje: str
+

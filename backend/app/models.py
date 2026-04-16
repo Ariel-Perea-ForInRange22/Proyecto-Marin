@@ -20,6 +20,7 @@ class Usuario(Base):
 
     # Campos de configuración de perfil extendida
     correo_recuperacion = Column(String, nullable=True)
+    telefono_recuperacion = Column(String, nullable=True)
     fecha_nacimiento = Column(Date, nullable=True)
     semestre = Column(Integer, nullable=True)  # 1 a 9
     grupo = Column(String, nullable=True)       # Ej: 'A', 'B', 'C'
@@ -32,17 +33,37 @@ class Usuario(Base):
     comunidades = relationship("Comunidad", secondary="usuario_comunidad", back_populates="miembros")
     cursos = relationship("Curso", secondary="usuario_curso", back_populates="estudiantes")
     publicaciones_comunidad = relationship("PublicacionComunidad", back_populates="autor")
+    codigos_recuperacion = relationship("CodigoRecuperacion", back_populates="usuario", cascade="all, delete-orphan")
+
+class CodigoRecuperacion(Base):
+    """Códigos de respaldo (backup codes) estilo Google/Facebook.
+    Se generan 8, se guardan hasheados, cada uno es de un solo uso."""
+    __tablename__ = "codigos_recuperacion"
+
+    id = Column(Integer, primary_key=True, index=True)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    codigo_hash = Column(String, nullable=False)
+    usado = Column(Boolean, default=False)
+    fecha_creacion = Column(DateTime, default=datetime.datetime.utcnow)
+
+    usuario = relationship("Usuario", back_populates="codigos_recuperacion")
 
 class Producto(Base):
     __tablename__ = "productos"
 
     id = Column(Integer, primary_key=True, index=True)
     titulo = Column(String, index=True)
-    descripcion = Column(String, index=True)
+    descripcion = Column(String)
     precio = Column(Float)
+    categoria = Column(String, index=True)  # libros, electronicos, ropa, accesorios, otros
+    condicion = Column(String, default="usado")  # nuevo, como_nuevo, usado
+    estado = Column(String, default="activo")  # activo, vendido, pausado
+    imagen_url = Column(String, nullable=True)
+    fecha_creacion = Column(DateTime, default=datetime.datetime.utcnow)
     
     # FK a usuario vendedor
     vendedor_id = Column(Integer, ForeignKey("usuarios.id"))
+    vendedor = relationship("Usuario", backref="productos")
 
 # Tabla intermedia para la relación de muchos-a-muchos entre Usuarios y Comunidades
 class UsuarioComunidad(Base):

@@ -19,6 +19,7 @@ data class UsuarioResponse(
     val racha_diaria: Int?,
     val ultima_conexion: String?,
     val correo_recuperacion: String?,
+    val telefono_recuperacion: String?,
     val fecha_nacimiento: String?,
     val semestre: Int?,
     val grupo: String?,
@@ -26,9 +27,10 @@ data class UsuarioResponse(
     val es_staff: Boolean?
 )
 
-/** Payload para PATCH /usuarios/me — todos los campos son opcionales */
+/** Payload para PATCH /usuarios/me â€” todos los campos son opcionales */
 data class UsuarioUpdateRequest(
     val correo_recuperacion: String? = null,
+    val telefono_recuperacion: String? = null,
     val fecha_nacimiento: String? = null,  // formato ISO: "YYYY-MM-DD"
     val semestre: Int? = null,
     val grupo: String? = null,
@@ -61,6 +63,47 @@ data class PublicacionComunidadCreate(
 
 data class PublicacionEstadoUpdate(
     val estado: String
+)
+
+// --- Recovery System ---
+
+data class RecoveryCodesResponse(
+    val codigos: List<String>,
+    val mensaje: String,
+    val total: Int
+)
+
+data class RecoveryCodesStatus(
+    val total: Int,
+    val disponibles: Int
+)
+
+data class RecoveryRequestEmail(
+    val email: String
+)
+
+data class RecoveryVerifyEmail(
+    val email: String,
+    val codigo: String
+)
+
+data class RecoveryVerifyBackup(
+    val email: String,
+    val codigo: String
+)
+
+data class ResetPasswordRequest(
+    val reset_token: String,
+    val nueva_password: String
+)
+
+data class ResetTokenResponse(
+    val reset_token: String,
+    val mensaje: String
+)
+
+data class ResetPasswordResponse(
+    val mensaje: String
 )
 
 interface ApiService {
@@ -128,4 +171,122 @@ interface ApiService {
         @retrofit2.http.Query("skip") skip: Int = 0,
         @retrofit2.http.Query("limit") limit: Int = 20
     ): Response<List<PublicacionComunidad>>
+
+    // --- Recovery Endpoints ---
+
+    @POST("recovery/generate-codes")
+    suspend fun generarCodigosRespaldo(
+        @Header("Authorization") token: String
+    ): Response<RecoveryCodesResponse>
+
+    @GET("recovery/codes-status")
+    suspend fun estadoCodigosRespaldo(
+        @Header("Authorization") token: String
+    ): Response<RecoveryCodesStatus>
+
+    @POST("recovery/request-email")
+    suspend fun solicitarCodigoPorEmail(
+        @Body datos: RecoveryRequestEmail
+    ): Response<ResetTokenResponse>
+
+    @POST("recovery/verify-email-code")
+    suspend fun verificarCodigoEmail(
+        @Body datos: RecoveryVerifyEmail
+    ): Response<ResetTokenResponse>
+
+    @POST("recovery/verify-backup-code")
+    suspend fun verificarCodigoRespaldo(
+        @Body datos: RecoveryVerifyBackup
+    ): Response<ResetTokenResponse>
+
+    @POST("recovery/reset-password")
+    suspend fun restablecerPassword(
+        @Body datos: ResetPasswordRequest
+    ): Response<ResetPasswordResponse>
+
+    // --- Marketplace Endpoints ---
+
+    @GET("productos/")
+    suspend fun listarProductos(
+        @retrofit2.http.Query("skip") skip: Int = 0,
+        @retrofit2.http.Query("limit") limit: Int = 20,
+        @retrofit2.http.Query("categoria") categoria: String? = null,
+        @retrofit2.http.Query("q") query: String? = null
+    ): Response<List<ProductoResponse>>
+
+    @GET("productos/mis-productos")
+    suspend fun misProductos(
+        @Header("Authorization") token: String
+    ): Response<List<ProductoResponse>>
+
+    @POST("productos/")
+    suspend fun crearProducto(
+        @Header("Authorization") token: String,
+        @Body producto: ProductoCreateRequest
+    ): Response<ProductoResponse>
+
+    @PATCH("productos/{producto_id}")
+    suspend fun actualizarProducto(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("producto_id") productoId: Int,
+        @Body datos: ProductoUpdateRequest
+    ): Response<ProductoResponse>
+
+    @retrofit2.http.DELETE("productos/{producto_id}")
+    suspend fun eliminarProducto(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("producto_id") productoId: Int
+    ): Response<DeleteResponse>
+
+    @retrofit2.http.Multipart
+    @POST("productos/{producto_id}/imagen")
+    suspend fun uploadImagenProducto(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("producto_id") productoId: Int,
+        @retrofit2.http.Part file: okhttp3.MultipartBody.Part
+    ): Response<ProductoResponse>
 }
+
+// --- Marketplace Data Classes ---
+
+data class ProductoVendedor(
+    val id: Int,
+    val nombre: String,
+    val email: String
+)
+
+data class ProductoResponse(
+    val id: Int,
+    val titulo: String,
+    val descripcion: String?,
+    val precio: Double,
+    val categoria: String,
+    val condicion: String,
+    val estado: String,
+    val fecha_creacion: String?,
+    val imagen_url: String?,
+    val vendedor_id: Int,
+    val vendedor: ProductoVendedor?
+)
+
+data class ProductoCreateRequest(
+    val titulo: String,
+    val descripcion: String?,
+    val precio: Double,
+    val categoria: String,
+    val condicion: String = "usado"
+)
+
+data class ProductoUpdateRequest(
+    val titulo: String? = null,
+    val descripcion: String? = null,
+    val precio: Double? = null,
+    val categoria: String? = null,
+    val condicion: String? = null,
+    val estado: String? = null
+)
+
+data class DeleteResponse(
+    val mensaje: String
+)
+
