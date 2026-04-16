@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -127,6 +129,12 @@
         <!-- Reset Password Activity -->
         <activity
             android:name="com.devcore.uat.ResetPasswordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DevCore"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.devcore.uat.MiembrosComunidadActivity"
             android:exported="false"
             android:theme="@style/Theme.DevCore"
             android:windowSoftInputMode="adjustResize" />

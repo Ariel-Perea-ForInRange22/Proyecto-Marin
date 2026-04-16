@@ -75,8 +75,9 @@ class RecoveryActivity : AppCompatActivity() {
             Toast.makeText(this, "Ingresa tu correo institucional", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (!email.endsWith("@uat.edu.mx")) {
-            Toast.makeText(this, "Usa tu correo institucional (@uat.edu.mx)", Toast.LENGTH_SHORT).show()
+        val dominiosValidos = email.endsWith("@uat.edu.mx") || email.endsWith("@alumnos.uat.edu.mx")
+        if (!dominiosValidos) {
+            Toast.makeText(this, "Usa tu correo institucional (@uat.edu.mx o @alumnos.uat.edu.mx)", Toast.LENGTH_SHORT).show()
             return false
         }
         return true

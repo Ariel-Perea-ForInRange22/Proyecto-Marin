@@ -6,6 +6,7 @@ backend/__pycache__/
 backend/app/__pycache__/
 backend/*.pyc
 backend/sql_app.db
+backend/.env
 *.pyc
 __pycache__/
 
@@ -13,6 +14,7 @@ __pycache__/
 kotlin/.gradle/
 kotlin/app/build/
 kotlin/build/
+kotlin/local.properties
 *.apk
 *.aab
 

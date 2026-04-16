@@ -169,3 +169,74 @@ class ResetTokenResponse(BaseModel):
     reset_token: str
     mensaje: str
 
+
+# ─────────────────────────────────────────
+#  BUS TRACKING
+# ─────────────────────────────────────────
+
+class UbicacionCreate(BaseModel):
+    latitud:  float
+    longitud: float
+
+class UbicacionResponse(BaseModel):
+    id:         int
+    latitud:    float
+    longitud:   float
+    timestamp:  datetime
+    activa:     bool
+    class Config:
+        from_attributes = True
+
+class PuntoCalor(BaseModel):
+    """Punto agregado para el mapa de calor (no revela identidad)."""
+    latitud:  float
+    longitud: float
+    cantidad: int   # cuántos alumnos hay en ese punto
+
+class ReporteBusCreate(BaseModel):
+    tipo: str        # "ya_paso" | "no_paso"
+    zona: Optional[str] = None
+    latitud:  Optional[float] = None
+    longitud: Optional[float] = None
+
+class ReporteBusResponse(BaseModel):
+    id:             int
+    tipo:           str
+    zona:           Optional[str] = None
+    latitud:        Optional[float] = None
+    longitud:       Optional[float] = None
+    confirmaciones: int
+    timestamp:      datetime
+    autor_nombre:   str   # nombre parcialmente enmascarado
+
+    class Config:
+        from_attributes = True
+
+
+# --- COMENTARIOS Y REACCIONES ---
+class ComentarioPublicacionBase(BaseModel):
+    contenido: str
+
+class ComentarioPublicacionCreate(ComentarioPublicacionBase):
+    pass
+
+class ComentarioPublicacionResponse(ComentarioPublicacionBase):
+    id: int
+    publicacion_id: int
+    autor_id: int
+    fecha_creacion: datetime
+    autor: UsuarioResumen
+
+    class Config:
+        from_attributes = True
+
+class ReaccionPublicacionCreate(BaseModel):
+    tipo: str = "LIKE"
+
+class PublicacionComunidadResponse(PublicacionComunidad):
+    comunidad_nombre: Optional[str] = None
+    comentarios: List[ComentarioPublicacionResponse] = []
+    usuario_ha_reaccionado: bool = False
+    
+    class Config:
+        from_attributes = True

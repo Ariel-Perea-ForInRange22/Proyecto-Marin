@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Reputación y logros"
+                android:text="Tus estadísticas y actividad"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -178,7 +178,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Usuario Confiable"
+                            android:text="Nivel Actual"
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -371,11 +371,11 @@
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
 
-                        <TextView
+                            <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="15dp"
-                            android:text="🎯 Próximo objetivo: Alcanza 14 días para desbloquear beneficios exclusivos"
+                            android:text="Mantén tu racha 7 días seguidos para ganar más visibilidad."
                             android:textColor="#856404"
                             android:textSize="13sp" />
                     </androidx.cardview.widget.CardView>
@@ -488,7 +488,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Actividad Reciente"
+                android:text="Tu Actividad"
                 android:textColor="@color/uat_azul"
                 android:textSize="18sp" />
 

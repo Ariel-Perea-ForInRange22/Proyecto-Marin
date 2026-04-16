@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
     // IMPORTANTE: En el emulador de Android Studio 10.0.2.2 apunta a localhost.
     // Si usas un dispositivo físico en la misma red Wi-Fi, cambia esta IP por tu IP local.
-    private const val BASE_URL = "http://192.168.0.5:8000/"
+    private const val BASE_URL = "http://192.168.3.10:8000/"
 
     val instance: Retrofit by lazy {
         Retrofit.Builder()

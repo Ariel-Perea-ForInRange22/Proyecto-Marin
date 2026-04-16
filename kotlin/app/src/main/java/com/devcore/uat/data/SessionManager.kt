@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,7 @@ class SessionManager(private val context: Context) {
         val REMEMBER_ME = booleanPreferencesKey("remember_me")
         val SAVED_EMAIL = stringPreferencesKey("saved_email")
         val BIOMETRIC_ENABLED = booleanPreferencesKey("biometric_enabled")
+        val USER_ID = intPreferencesKey("user_id")
     }
 
     suspend fun saveAuthToken(token: String, rememberMe: Boolean, email: String) {
@@ -42,6 +44,16 @@ class SessionManager(private val context: Context) {
 
     val authTokenFlow: Flow<String?> = context.dataStore.data.map { prefs ->
         prefs[JWT_TOKEN]
+    }
+
+    val userIdFlow: Flow<Int?> = context.dataStore.data.map { prefs ->
+        prefs[USER_ID]
+    }
+
+    suspend fun saveUserId(id: Int) {
+        context.dataStore.edit { prefs ->
+            prefs[USER_ID] = id
+        }
     }
 
     val rememberMeFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->

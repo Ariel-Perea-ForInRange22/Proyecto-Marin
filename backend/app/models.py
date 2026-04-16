@@ -109,6 +109,31 @@ class PublicacionComunidad(Base):
     # Relaciones
     comunidad = relationship("Comunidad", back_populates="publicaciones")
     autor = relationship("Usuario", back_populates="publicaciones_comunidad")
+    comentarios = relationship("ComentarioPublicacion", back_populates="publicacion", cascade="all, delete-orphan")
+    reacciones = relationship("ReaccionPublicacion", back_populates="publicacion", cascade="all, delete-orphan")
+
+class ComentarioPublicacion(Base):
+    __tablename__ = "comentarios_publicacion"
+    id = Column(Integer, primary_key=True, index=True)
+    publicacion_id = Column(Integer, ForeignKey("publicaciones_comunidad.id"))
+    autor_id = Column(Integer, ForeignKey("usuarios.id"))
+    contenido = Column(String)
+    fecha_creacion = Column(DateTime, default=datetime.datetime.utcnow)
+
+    publicacion = relationship("PublicacionComunidad", back_populates="comentarios")
+    autor = relationship("Usuario", backref="comentarios_publicacion")
+
+class ReaccionPublicacion(Base):
+    __tablename__ = "reacciones_publicacion"
+    id = Column(Integer, primary_key=True, index=True)
+    publicacion_id = Column(Integer, ForeignKey("publicaciones_comunidad.id"))
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"))
+    tipo = Column(String, default="LIKE") 
+    fecha_creacion = Column(DateTime, default=datetime.datetime.utcnow)
+
+    publicacion = relationship("PublicacionComunidad", back_populates="reacciones")
+    usuario = relationship("Usuario", backref="reacciones_publicacion")
+
 
 class Curso(Base):
     __tablename__ = "cursos"
@@ -123,3 +148,36 @@ class Curso(Base):
 
 # Se agregan al final las relaciones inversas para la clase Usuario (se deben agregar a Usuario también, 
 # pero SQLAlchemy permite inyectarlas dinámicamente o definirlas allí. Las pondremos en Usuario).
+
+# ─────────────────────────────────────────
+#  BUS TRACKING - Modelos
+# ─────────────────────────────────────────
+
+class UbicacionAlumno(Base):
+    """Ubicación GPS activa de un alumno (expira en 10 minutos)."""
+    __tablename__ = "ubicaciones_alumnos"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    usuario_id  = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    latitud     = Column(Float, nullable=False)
+    longitud    = Column(Float, nullable=False)
+    timestamp   = Column(DateTime, default=datetime.datetime.utcnow)
+    activa      = Column(Boolean, default=True)
+
+    usuario = relationship("Usuario", backref="ubicaciones_bus")
+
+
+class ReporteBus(Base):
+    """Reporte manual de un alumno sobre el estado del autobús."""
+    __tablename__ = "reportes_bus"
+
+    id              = Column(Integer, primary_key=True, index=True)
+    usuario_id      = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    tipo            = Column(String, nullable=False)   # "ya_paso" | "no_paso"
+    zona            = Column(String, nullable=True)    # Descripción libre, ej. "Frente a FIME"
+    latitud         = Column(Float, nullable=True)
+    longitud        = Column(Float, nullable=True)
+    confirmaciones  = Column(Integer, default=0)
+    timestamp       = Column(DateTime, default=datetime.datetime.utcnow)
+
+    usuario = relationship("Usuario", backref="reportes_bus")

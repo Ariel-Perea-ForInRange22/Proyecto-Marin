@@ -44,16 +44,32 @@ data class UsuarioResumen(
     val es_staff: Boolean?
 )
 
+data class ComentarioPublicacionResponse(
+    val id: Int,
+    val publicacion_id: Int,
+    val autor_id: Int,
+    val fecha_creacion: String,
+    val contenido: String,
+    val autor: UsuarioResumen
+)
+
+data class ComentarioPublicacionCreate(
+    val contenido: String
+)
+
 data class PublicacionComunidad(
     val id: Int,
     val comunidad_id: Int,
     val autor_id: Int,
     val fecha_creacion: String,
-    val likes_count: Int,
+    var likes_count: Int,
     val autor: UsuarioResumen,
     val contenido: String,
     val estado: String?,
-    val es_oficial: Boolean?
+    val es_oficial: Boolean?,
+    val comunidad_nombre: String? = null,
+    var usuario_ha_reaccionado: Boolean? = false,
+    val comentarios: List<ComentarioPublicacionResponse> = emptyList()
 )
 
 data class PublicacionComunidadCreate(
@@ -106,6 +122,41 @@ data class ResetPasswordResponse(
     val mensaje: String
 )
 
+// --- Bus Tracking Data Classes ---
+
+data class UbicacionCreate(
+    val latitud: Double,
+    val longitud: Double
+)
+
+data class PuntoCalor(
+    val latitud: Double,
+    val longitud: Double,
+    val cantidad: Int
+)
+
+data class ReporteBusCreate(
+    val tipo: String,
+    val zona: String? = null,
+    val latitud: Double? = null,
+    val longitud: Double? = null
+)
+
+data class ReporteBusResponse(
+    val id: Int,
+    val tipo: String,
+    val zona: String?,
+    val latitud: Double?,
+    val longitud: Double?,
+    val confirmaciones: Int,
+    val timestamp: String,
+    val autor_nombre: String
+)
+
+data class ConfirmacionResponse(
+    val confirmaciones: Int
+)
+
 interface ApiService {
     @POST("login")
     @retrofit2.http.FormUrlEncoded
@@ -131,6 +182,13 @@ interface ApiService {
         @retrofit2.http.Path("comunidad_id") comunidadId: Int,
         @retrofit2.http.Query("skip") skip: Int = 0,
         @retrofit2.http.Query("limit") limit: Int = 20,
+        @Header("Authorization") token: String? = null
+    ): Response<List<PublicacionComunidad>>
+
+    @GET("publicaciones/feed")
+    suspend fun obtenerFeedGlobal(
+        @retrofit2.http.Query("skip") skip: Int = 0,
+        @retrofit2.http.Query("limit") limit: Int = 30,
         @Header("Authorization") token: String? = null
     ): Response<List<PublicacionComunidad>>
 
@@ -245,6 +303,71 @@ interface ApiService {
         @retrofit2.http.Path("producto_id") productoId: Int,
         @retrofit2.http.Part file: okhttp3.MultipartBody.Part
     ): Response<ProductoResponse>
+
+    // --- Bus Tracking Endpoints ---
+
+    @POST("bus/ubicacion")
+    suspend fun reportarUbicacionActiva(
+        @Header("Authorization") token: String,
+        @Body ubicacion: UbicacionCreate
+    ): Response<Void> // Response type is UbicacionResponse but we don't strictly need it on android right now
+
+    @retrofit2.http.DELETE("bus/ubicacion")
+    suspend fun borrarUbicacionActiva(
+        @Header("Authorization") token: String
+    ): Response<Void>
+
+    @GET("bus/puntos-calor")
+    suspend fun obtenerPuntosCalor(): Response<List<PuntoCalor>>
+
+    @POST("bus/reportes")
+    suspend fun crearReporteBus(
+        @Header("Authorization") token: String,
+        @Body reporte: ReporteBusCreate
+    ): Response<ReporteBusResponse>
+
+    @GET("bus/reportes")
+    suspend fun obtenerReportesBus(): Response<List<ReporteBusResponse>>
+
+    @POST("bus/reportes/{reporte_id}/confirmar")
+    suspend fun confirmarReporteBus(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("reporte_id") reporteId: Int
+    ): Response<ConfirmacionResponse>
+
+    // --- Reacciones y Comentarios ---
+
+    @POST("publicaciones/{pub_id}/reaccionar")
+    suspend fun reaccionarPublicacion(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("pub_id") pubId: Int
+    ): Response<ReaccionResponse>
+
+    @POST("publicaciones/{pub_id}/comentarios")
+    suspend fun comentarPublicacion(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("pub_id") pubId: Int,
+        @Body comentario: ComentarioPublicacionCreate
+    ): Response<ComentarioPublicacionResponse>
+
+    @retrofit2.http.DELETE("publicaciones/{pub_id}")
+    suspend fun borrarPublicacion(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("pub_id") pubId: Int
+    ): Response<DeleteResponse>
+
+    @retrofit2.http.DELETE("publicaciones/comentarios/{com_id}")
+    suspend fun borrarComentario(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("com_id") comId: Int
+    ): Response<DeleteResponse>
+
+    @GET("comunidades/{comunidad_id}/miembros")
+    suspend fun buscarMiembrosComunidad(
+        @Header("Authorization") token: String,
+        @retrofit2.http.Path("comunidad_id") comunidadId: Int,
+        @retrofit2.http.Query("q") q: String = ""
+    ): Response<List<UsuarioResumen>>
 }
 
 // --- Marketplace Data Classes ---
@@ -287,6 +410,11 @@ data class ProductoUpdateRequest(
 )
 
 data class DeleteResponse(
-    val mensaje: String
+    val detail: String
+)
+
+data class ReaccionResponse(
+    val liked: Boolean,
+    val likes_count: Int
 )
 

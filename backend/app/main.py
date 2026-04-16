@@ -3,8 +3,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
-from typing import List
-from datetime import timedelta
+from typing import List, Optional
+from datetime import timedelta, datetime
 from jose import JWTError, jwt
 import secrets
 import random
@@ -20,6 +20,7 @@ from .auth import (
     create_reset_token, verify_reset_token,
     ALGORITHM, SECRET_KEY, ACCESS_TOKEN_EXPIRE_MINUTES
 )
+from .email_service import send_recovery_code
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -195,7 +196,7 @@ def obtener_publicaciones_usuario(
 
 # --- ENDPOINTS: COMUNIDADES Y MURAL ---
 
-@app.get("/comunidades/{comunidad_id}/publicaciones", response_model=List[schemas.PublicacionComunidad])
+@app.get("/comunidades/{comunidad_id}/publicaciones", response_model=List[schemas.PublicacionComunidadResponse])
 def obtener_publicaciones_comunidad(
     comunidad_id: int, 
     skip: int = 0, 
@@ -211,7 +212,24 @@ def obtener_publicaciones_comunidad(
         .filter(models.PublicacionComunidad.estado == "APROBADA")\
         .order_by(models.PublicacionComunidad.fecha_creacion.desc())\
         .offset(skip).limit(limit).all()
-    return publicaciones
+        
+    resultado = []
+    for pub in publicaciones:
+        ha_dado_like = db.query(models.ReaccionPublicacion).filter(
+            models.ReaccionPublicacion.publicacion_id == pub.id,
+            models.ReaccionPublicacion.usuario_id == current_user.id
+        ).first() is not None
+        
+        # Pydantic v2 maneja atributos ORM, podemos asignar via dict si es necesario,
+        # pero es mas seguro crear una instancia de Response manual o anexarlo al ORM
+        pub_dict = pub.__dict__.copy()
+        pub_dict['autor'] = pub.autor
+        pub_dict['comentarios'] = pub.comentarios
+        pub_dict['usuario_ha_reaccionado'] = ha_dado_like
+        pub_dict['comunidad_nombre'] = pub.comunidad.nombre if pub.comunidad else None
+        resultado.append(pub_dict)
+        
+    return resultado
 
 @app.get("/comunidades/{comunidad_id}/pendientes", response_model=List[schemas.PublicacionComunidad])
 def obtener_publicaciones_pendientes(
@@ -258,6 +276,42 @@ def crear_publicacion(
     db.commit()
     db.refresh(nueva_pub)
     return nueva_pub
+
+@app.get("/publicaciones/feed", response_model=List[schemas.PublicacionComunidadResponse])
+def obtener_feed_global(
+    skip: int = 0, limit: int = 30,
+    current_user: models.Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Devuelve un feed global con las publicaciones APROBADAS de las comunidades
+    a las que el usuario pertenece.
+    """
+    mis_comunidades_ids = [c.id for c in current_user.comunidades]
+    if not mis_comunidades_ids:
+        return []
+
+    pubs = db.query(models.PublicacionComunidad)\
+        .filter(models.PublicacionComunidad.estado == "APROBADA")\
+        .filter(models.PublicacionComunidad.comunidad_id.in_(mis_comunidades_ids))\
+        .order_by(models.PublicacionComunidad.fecha_creacion.desc())\
+        .offset(skip).limit(limit).all()
+        
+    resultado = []
+    for pub in pubs:
+        ha_dado_like = db.query(models.ReaccionPublicacion).filter(
+            models.ReaccionPublicacion.publicacion_id == pub.id,
+            models.ReaccionPublicacion.usuario_id == current_user.id
+        ).first() is not None
+        
+        pub_dict = pub.__dict__.copy()
+        pub_dict['autor'] = pub.autor
+        pub_dict['comentarios'] = pub.comentarios
+        pub_dict['usuario_ha_reaccionado'] = ha_dado_like
+        pub_dict['comunidad_nombre'] = pub.comunidad.nombre if pub.comunidad else None
+        resultado.append(pub_dict)
+        
+    return resultado
 
 @app.patch("/comunidades/{comunidad_id}/publicaciones/{pub_id}/estado", response_model=schemas.PublicacionComunidad)
 def cambiar_estado_publicacion(
@@ -528,13 +582,15 @@ def solicitar_codigo_por_email(
         "correo_destino": user.correo_recuperacion
     }
     
-    # SIMULACION: imprimir en consola
-    print(f"\n{'='*50}")
-    print(f"CODIGO DE RECUPERACION para: {datos.email}")
-    print(f"   Enviado a: {user.correo_recuperacion}")
-    print(f"   Codigo: {codigo}")
-    print(f"   (Expira en 15 minutos)")
-    print(f"{'='*50}\n")
+    # Intentar envío real de correo; si falla, igual imprimir en consola
+    enviado = send_recovery_code(user.correo_recuperacion, codigo)
+    if not enviado:
+        print(f"\n{'='*50}")
+        print(f"[FALLBACK CONSOLA] CODIGO DE RECUPERACION para: {datos.email}")
+        print(f"   Enviado (simulado) a: {user.correo_recuperacion}")
+        print(f"   Codigo: {codigo}")
+        print(f"   (Expira en 15 minutos)")
+        print(f"{'='*50}\n")
     
     # Enmascarar el correo de recuperacion para la respuesta
     email_parts = user.correo_recuperacion.split("@")
@@ -642,4 +698,247 @@ def restablecer_contrasena(
     
     return {"mensaje": "Contrasena actualizada correctamente. Ya puedes iniciar sesion."}
 
-# TODO: Endpoints de Productos (Mercadito), Reportes y Rastreo.
+
+# ===================================================
+#  BUS TRACKING
+# ===================================================
+
+RADIO_AGRUPACION_KM = 0.05   # 50 metros para agrupar puntos de calor
+MINUTOS_EXPIRACION   = 10    # ubicaciones activas durante 10 minutos
+MAX_REPORTES_RECIENTES = 20  # cuántos reportes mostrar
+
+
+def _mascarar_nombre(nombre: str) -> str:
+    """Devuelve el primer nombre + inicial del apellido: 'Carlos G.'"""
+    partes = nombre.strip().split()
+    if len(partes) >= 2:
+        return f"{partes[0]} {partes[1][0]}."
+    return partes[0] if partes else "Alumno"
+
+
+@app.post("/bus/ubicacion", response_model=schemas.UbicacionResponse)
+def reportar_ubicacion(
+    datos: schemas.UbicacionCreate,
+    current_user: models.Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """El alumno comparte su ubicación GPS activa (expira en 10 minutos)."""
+    # Desactivar ubicaciones anteriores de este usuario
+    db.query(models.UbicacionAlumno)\
+        .filter(models.UbicacionAlumno.usuario_id == current_user.id)\
+        .update({"activa": False})
+
+    nueva = models.UbicacionAlumno(
+        usuario_id=current_user.id,
+        latitud=datos.latitud,
+        longitud=datos.longitud,
+        activa=True
+    )
+    db.add(nueva)
+    db.commit()
+    db.refresh(nueva)
+    return nueva
+
+
+@app.delete("/bus/ubicacion")
+def borrar_ubicacion(
+    current_user: models.Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """El alumno deja de compartir su ubicación."""
+    db.query(models.UbicacionAlumno)\
+        .filter(models.UbicacionAlumno.usuario_id == current_user.id)\
+        .update({"activa": False})
+    db.commit()
+    return {"mensaje": "Ubicacion desactivada"}
+
+
+@app.get("/bus/puntos-calor", response_model=List[schemas.PuntoCalor])
+def puntos_calor(db: Session = Depends(get_db)):
+    """Devuelve puntos agrupados de alumnos activos (últimos 10 min). Sin auth."""
+    limite = datetime.utcnow() - timedelta(minutes=MINUTOS_EXPIRACION)
+
+    ubicaciones = db.query(models.UbicacionAlumno).filter(
+        models.UbicacionAlumno.activa == True,
+        models.UbicacionAlumno.timestamp >= limite
+    ).all()
+
+    if not ubicaciones:
+        return []
+
+    # Agrupar por proximidad simple (cuadrícula de ~50m)
+    grupos: dict = {}
+    for u in ubicaciones:
+        # Redondear a 4 decimales (~11m de precisión) para agrupar cercanos
+        clave = (round(u.latitud, 3), round(u.longitud, 3))
+        if clave not in grupos:
+            grupos[clave] = {"lat": 0.0, "lng": 0.0, "count": 0}
+        grupos[clave]["lat"] += u.latitud
+        grupos[clave]["lng"] += u.longitud
+        grupos[clave]["count"] += 1
+
+    result = []
+    for g in grupos.values():
+        result.append(schemas.PuntoCalor(
+            latitud=round(g["lat"] / g["count"], 6),
+            longitud=round(g["lng"] / g["count"], 6),
+            cantidad=g["count"]
+        ))
+    return result
+
+
+@app.post("/bus/reportes", response_model=schemas.ReporteBusResponse)
+def crear_reporte_bus(
+    datos: schemas.ReporteBusCreate,
+    current_user: models.Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """El alumno reporta si el autobús ya pasó o no ha pasado."""
+    if datos.tipo not in ("ya_paso", "no_paso"):
+        raise HTTPException(status_code=400, detail="Tipo invalido. Usa: ya_paso | no_paso")
+
+    reporte = models.ReporteBus(
+        usuario_id=current_user.id,
+        tipo=datos.tipo,
+        zona=datos.zona,
+        latitud=datos.latitud,
+        longitud=datos.longitud
+    )
+    db.add(reporte)
+    db.commit()
+    db.refresh(reporte)
+
+    return schemas.ReporteBusResponse(
+        id=reporte.id,
+        tipo=reporte.tipo,
+        zona=reporte.zona,
+        latitud=reporte.latitud,
+        longitud=reporte.longitud,
+        confirmaciones=reporte.confirmaciones,
+        timestamp=reporte.timestamp,
+        autor_nombre=_mascarar_nombre(current_user.nombre)
+    )
+
+
+@app.get("/bus/reportes", response_model=List[schemas.ReporteBusResponse])
+def listar_reportes_bus(db: Session = Depends(get_db)):
+    """Lista los reportes de bus de las últimas 2 horas (sin auth, público)."""
+    limite = datetime.utcnow() - timedelta(hours=2)
+    reportes = db.query(models.ReporteBus)\
+        .filter(models.ReporteBus.timestamp >= limite)\
+        .order_by(models.ReporteBus.timestamp.desc())\
+        .limit(MAX_REPORTES_RECIENTES).all()
+
+    result = []
+    for r in reportes:
+        result.append(schemas.ReporteBusResponse(
+            id=r.id,
+            tipo=r.tipo,
+            zona=r.zona,
+            latitud=r.latitud,
+            longitud=r.longitud,
+            confirmaciones=r.confirmaciones,
+            timestamp=r.timestamp,
+            autor_nombre=_mascarar_nombre(r.usuario.nombre)
+        ))
+    return result
+
+
+@app.post("/bus/reportes/{reporte_id}/confirmar")
+def confirmar_reporte(
+    reporte_id: int,
+    current_user: models.Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Confirma el reporte de otro alumno (incrementa contador)."""
+    reporte = db.query(models.ReporteBus).filter(models.ReporteBus.id == reporte_id).first()
+    if not reporte:
+        raise HTTPException(status_code=404, detail="Reporte no encontrado")
+    if reporte.usuario_id == current_user.id:
+        raise HTTPException(status_code=400, detail="No puedes confirmar tu propio reporte")
+
+    reporte.confirmaciones += 1
+    db.commit()
+    return {"confirmaciones": reporte.confirmaciones}
+
+
+# --- FACEBOOK-STYLE INTERACTIONS ---
+
+@app.post("/publicaciones/{pub_id}/reaccionar")
+def reaccionar_publicacion(pub_id: int, db: Session = Depends(get_db), current_user: models.Usuario = Depends(get_current_user)):
+    pub = db.query(models.PublicacionComunidad).filter(models.PublicacionComunidad.id == pub_id).first()
+    if not pub:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+        
+    # Toggle like
+    existente = db.query(models.ReaccionPublicacion).filter(
+        models.ReaccionPublicacion.publicacion_id == pub_id,
+        models.ReaccionPublicacion.usuario_id == current_user.id
+    ).first()
+    
+    if existente:
+        db.delete(existente)
+        pub.likes_count = max(0, pub.likes_count - 1)
+        db.commit()
+        return {"liked": False, "likes_count": pub.likes_count}
+    else:
+        nueva_reaccion = models.ReaccionPublicacion(publicacion_id=pub_id, usuario_id=current_user.id)
+        db.add(nueva_reaccion)
+        pub.likes_count += 1
+        db.commit()
+        return {"liked": True, "likes_count": pub.likes_count}
+
+@app.post("/publicaciones/{pub_id}/comentarios", response_model=schemas.ComentarioPublicacionResponse)
+def comentar_publicacion(pub_id: int, com: schemas.ComentarioPublicacionCreate, db: Session = Depends(get_db), current_user: models.Usuario = Depends(get_current_user)):
+    pub = db.query(models.PublicacionComunidad).filter(models.PublicacionComunidad.id == pub_id).first()
+    if not pub:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+        
+    nuevo_comentario = models.ComentarioPublicacion(
+        publicacion_id=pub_id,
+        autor_id=current_user.id,
+        contenido=com.contenido
+    )
+    db.add(nuevo_comentario)
+    db.commit()
+    db.refresh(nuevo_comentario)
+    return nuevo_comentario
+
+@app.delete("/publicaciones/{pub_id}")
+def borrar_publicacion(pub_id: int, db: Session = Depends(get_db), current_user: models.Usuario = Depends(get_current_user)):
+    pub = db.query(models.PublicacionComunidad).filter(models.PublicacionComunidad.id == pub_id).first()
+    if not pub:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+    
+    if not current_user.es_staff and pub.autor_id != current_user.id:
+        raise HTTPException(status_code=403, detail="No tienes permiso para borrar este post")
+        
+    db.delete(pub)
+    db.commit()
+    return {"detail": "Post eliminado"}
+
+@app.delete("/publicaciones/comentarios/{com_id}")
+def borrar_comentario(com_id: int, db: Session = Depends(get_db), current_user: models.Usuario = Depends(get_current_user)):
+    com = db.query(models.ComentarioPublicacion).filter(models.ComentarioPublicacion.id == com_id).first()
+    if not com:
+        raise HTTPException(status_code=404, detail="Comentario no encontrado")
+        
+    if not current_user.es_staff and com.autor_id != current_user.id:
+        raise HTTPException(status_code=403, detail="No tienes permiso para borrar este comentario")
+        
+    db.delete(com)
+    db.commit()
+    return {"detail": "Comentario eliminado"}
+
+@app.get("/comunidades/{comunidad_id}/miembros", response_model=List[schemas.UsuarioResumen])
+def buscar_miembros_comunidad(comunidad_id: int, q: str = "", db: Session = Depends(get_db), current_user: models.Usuario = Depends(get_current_user)):
+    comunidad = db.query(models.Comunidad).filter(models.Comunidad.id == comunidad_id).first()
+    if not comunidad:
+        raise HTTPException(status_code=404, detail="Comunidad no encontrada")
+        
+    query = db.query(models.Usuario)        .join(models.UsuarioComunidad, models.Usuario.id == models.UsuarioComunidad.usuario_id)        .filter(models.UsuarioComunidad.comunidad_id == comunidad_id)
+        
+    if q:
+        query = query.filter(models.Usuario.nombre.ilike(f"%{q}%"))
+        
+    return query.all()

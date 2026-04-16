@@ -83,6 +83,15 @@ class LoginActivity : AppCompatActivity() {
                         
                         lifecycleScope.launch {
                             sessionManager.saveAuthToken(token, rememberMe, email)
+                            // Fetch and persist user ID for like/delete logic
+                            try {
+                                val meResp = RetrofitClient.apiService.getMe("Bearer $token")
+                                if (meResp.isSuccessful) {
+                                    meResp.body()?.id?.let { userId ->
+                                        sessionManager.saveUserId(userId)
+                                    }
+                                }
+                            } catch (_: Exception) {}
                         }
                         
                         Toast.makeText(this@LoginActivity, "Login exitoso", Toast.LENGTH_SHORT).show()
@@ -110,12 +119,12 @@ class LoginActivity : AppCompatActivity() {
             return false
         }
 
-        if (!email.endsWith("@uat.edu.mx")) {
-            Toast.makeText(this, "Usa tu correo institucional (@uat.edu.mx)", Toast.LENGTH_SHORT).show()
+        val dominiosValidos = email.endsWith("@uat.edu.mx") || email.endsWith("@alumnos.uat.edu.mx")
+        if (!dominiosValidos) {
+            Toast.makeText(this, "Usa tu correo institucional (@uat.edu.mx o @alumnos.uat.edu.mx)", Toast.LENGTH_SHORT).show()
             return false
         }
 
         return true
     }
 }
-
